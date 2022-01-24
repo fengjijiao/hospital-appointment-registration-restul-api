@@ -111,10 +111,8 @@ public class AppointmentController {
             appointment.setUserId(Integer.parseInt(""+userId));
             appointment.setTime(Integer.parseInt(""+time));
             boolean result1 = appointmentService.save(appointment);
-            System.out.println("预约成功，doctorId:" + doctorId + "，userId:" + userId + "，time:" + ldt);
             return R.ok().put("result", result1);
         } else {
-            System.out.println("预约失败，doctorId:" + doctorId + "，userId:" + userId + "，time:" + ldt);
             return R.ok().put("result", false);
         }
     }
@@ -144,10 +142,8 @@ public class AppointmentController {
             queryWrapper.eq(Appointment::getTime, time);
             queryWrapper.eq(Appointment::getDoctorId, doctorId);
             boolean result1 = appointmentService.remove(queryWrapper);
-            System.out.println("取消预约成功，doctorId:" + doctorId + "，userId:" + userId + "，time:" + ldt);
             return R.ok().put("result", result1);
         } else {
-            System.out.println("取消预约失败，doctorId:" + doctorId + "，userId:" + userId + "，time:" + ldt);
             return R.ok().put("result", false);
         }
     }

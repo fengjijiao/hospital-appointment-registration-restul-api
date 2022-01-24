@@ -59,14 +59,8 @@ public class AppointmentCache {
         }
     }
 
-    //private static final Map<Long, List<Scheduling>> schedulingList = new HashMap<>();
     private static final Map<Long, Map<String, List<NoSources>>> noSourceList = new HashMap<>();
     private static final Lock nsl = new ReentrantLock();
-
-//    public static List<Scheduling> listScheduling(Long doctorId) {
-////        schedulingList.computeIfAbsent(doctorId, k -> new ArrayList<>());
-//        return schedulingList.get(doctorId);
-//    }
 
     public static Map<String, List<NoSources>> mapDoctorAllNS(Long doctorId) {
         noSourceList.computeIfAbsent(doctorId, k -> new HashMap<>());

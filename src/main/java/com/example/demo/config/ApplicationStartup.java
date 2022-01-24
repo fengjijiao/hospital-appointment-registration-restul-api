@@ -52,23 +52,24 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        logger.info("启动数据初始化：开始");
+        logger.info("Startup data initialization: start");
         genSchedulingStuffData();
         genNOSourceData();
         genRegisteredNOSourceData();
-        logger.info("启动数据初始化：完成");
+        logger.info("Startup data initialization: done");
     }
 
     private void genSchedulingStuffData() {
-        logger.info("生成排班计划：开始");
+        logger.info("Generate Shift Schedule: start");
         LambdaQueryWrapper<Scheduling> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.gt(Scheduling::getDate, DateUtils.getCurrentDate()).eq(Scheduling::getSchedulingStatus, 0).or(wrapper -> wrapper.eq(Scheduling::getDate, DateUtils.getCurrentDate()).eq(Scheduling::getSchedulingStatus, 0));//>= currentDate & status = 0
-        List<Scheduling> schedulingList = schedulingService.list(queryWrapper);//获取排班计划
-        schedulingStuffService.remove(new QueryWrapper<>());//清空排班医生表
+        queryWrapper.gt(Scheduling::getDate, DateUtils.getCurrentDate()).eq(Scheduling::getSchedulingStatus, 0)
+                .or(wrapper -> wrapper.eq(Scheduling::getDate, DateUtils.getCurrentDate()).eq(Scheduling::getSchedulingStatus, 0));
+        List<Scheduling> schedulingList = schedulingService.list(queryWrapper);
+        schedulingStuffService.remove(new QueryWrapper<>());
         schedulingList.forEach(scheduling -> {
             LambdaQueryWrapper<Doctor> queryWrapper1 = new LambdaQueryWrapper<>();
             queryWrapper1.eq(Doctor::getDepartmentId, scheduling.getDepartmentId()).eq(Doctor::getDoctorStatus, 0);
-            List<Doctor> doctorList = doctorService.list(queryWrapper1);//查出该科室的所有医生（状态正常）
+            List<Doctor> doctorList = doctorService.list(queryWrapper1);
             doctorList.forEach(doctor -> {
                 SchedulingStuff ss = new SchedulingStuff();
                 ss.setDepartmentId(scheduling.getDepartmentId());
@@ -77,31 +78,31 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
                 ss.setStartTime(scheduling.getStartTime());
                 ss.setEndTime(scheduling.getEndTime());
                 ss.setDate(scheduling.getDate());
-                schedulingStuffService.save(ss);//将排班医生信息保存
+                schedulingStuffService.save(ss);
             });
         });
-        logger.info("生成排班计划：结束");
+        logger.info("Generate Shift Schedule: end");
     }
 
     private void genNOSourceData() {
-        logger.info("初始化号池：开始");
+        logger.info("Initialization pool: start");
         LambdaQueryWrapper<SchedulingStuff> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.gt(SchedulingStuff::getEndTime, TimeUtils.getCurrentTime()).eq(SchedulingStuff::getSchedulingStatus, 0)
                 .or(wrapper -> wrapper.gt(SchedulingStuff::getDate, DateUtils.getCurrentDate()).eq(SchedulingStuff::getSchedulingStatus, 0));
         List<SchedulingStuff> schedulingStuffList = schedulingStuffService.list(queryWrapper);
         schedulingStuffList.forEach(schedulingStuff -> {
-            LocalDateTime ldt = LocalDateTime.now();//当前时间
-            LocalDateTime ldt1 = TimeUtils.mergeDateToLocalDateTimeViaInstant(schedulingStuff.getDate(), schedulingStuff.getEndTime());//结束时间LocalDateTime
-            LocalDateTime ldt2 = TimeUtils.mergeDateToLocalDateTimeViaInstant(schedulingStuff.getDate(), schedulingStuff.getStartTime());//开始时间LocalDateTime
-            if (ldt1.isBefore(ldt)) {//记录过期，删除该记录
+            LocalDateTime ldt = LocalDateTime.now();
+            LocalDateTime ldt1 = TimeUtils.mergeDateToLocalDateTimeViaInstant(schedulingStuff.getDate(), schedulingStuff.getEndTime());
+            LocalDateTime ldt2 = TimeUtils.mergeDateToLocalDateTimeViaInstant(schedulingStuff.getDate(), schedulingStuff.getStartTime());
+            if (ldt1.isBefore(ldt)) {
                 schedulingStuffService.removeById(schedulingStuff.getId());
-            } else {//记录未过期，生成号源
+            } else {
                 Map<String, List<AppointmentCache.NoSources>> doctorAppointments = AppointmentCache.mapDoctorAllNS(VTypeUtils.convertIntegerToLong(schedulingStuff.getDoctorId()));
                 if (ldt2.isAfter(ldt)) {
                     ldt = ldt2;
                 }
                 ldt1 = ldt1.minus(intervalValue, intervalUnit);
-                while (ldt1.isAfter(ldt)) {//时间有效
+                while (ldt1.isAfter(ldt)) {
                     long timestamp1 = ldt1.toEpochSecond(ZoneOffset.of("+8"));
                     String date1 = DateUtils.getDateStrFromTimestamp(timestamp1);
                     List<AppointmentCache.NoSources> dateAppointments = doctorAppointments.computeIfAbsent(date1, k -> new ArrayList<>());
@@ -111,18 +112,18 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
                     dateAppointments.add(ns);
                     ldt1 = ldt1.minus(intervalValue, intervalUnit);
                 }
-                System.out.println("记录：" + schedulingStuff.getId() + "生成完成！");
+                logger.info("Record:" + schedulingStuff.getId() + "Generation complete!");
             }
         });
-        logger.info("初始化号池：结束");
+        logger.info("Initialization pool: end");
     }
 
     private void genRegisteredNOSourceData() {
-        logger.info("初始化已预约号池：开始");
+        logger.info("Initialize reserved number pool: start");
         LambdaQueryWrapper<Appointment> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.gt(Appointment::getTime, TSUtils.currentTimestamp());
         List<Appointment> appointmentList = appointmentService.list(queryWrapper);
         appointmentList.forEach(appointment -> AppointmentCache.registerNoSource(appointment.getDoctorId(), appointment.getTime(), appointment.getUserId()));
-        logger.info("初始化已预约号池：结束");
+        logger.info("Initialize reserved number pool: end");
     }
 }
