@@ -1,6 +1,7 @@
 package com.example.demo.constant;
 
 import com.example.demo.utils.DateUtils;
+import com.example.demo.utils.VTypeUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -76,6 +77,10 @@ public class AppointmentCache {
         return noSourceList.get(doctorId).get(dateStr);
     }
 
+    public static Boolean registerNoSource(Integer doctorId, Integer timestamp, Integer parentId) {
+        return registerNoSource(VTypeUtils.convertIntegerToLong(doctorId), VTypeUtils.convertIntegerToLong(timestamp), VTypeUtils.convertIntegerToLong(parentId));
+    }
+
     public static Boolean registerNoSource(Long doctorId, Long timestamp, Long parentId) {
         String dateStr = DateUtils.getDateStrFromTimestamp(timestamp);
         if (!noSourceList.containsKey(doctorId) || !noSourceList.get(doctorId).containsKey(dateStr)) return false;
@@ -88,6 +93,10 @@ public class AppointmentCache {
         ns.parentId = parentId;
         nsl.unlock();
         return true;
+    }
+
+    public static Boolean unRegisterNoSource(Integer doctorId, Integer timestamp) {
+        return unRegisterNoSource(VTypeUtils.convertIntegerToLong(doctorId), VTypeUtils.convertIntegerToLong(timestamp));
     }
 
     public static Boolean unRegisterNoSource(Long doctorId, Long timestamp) {

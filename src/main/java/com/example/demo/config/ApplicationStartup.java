@@ -3,13 +3,16 @@ package com.example.demo.config;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.constant.AppointmentCache;
+import com.example.demo.entity.Appointment;
 import com.example.demo.entity.Doctor;
 import com.example.demo.entity.Scheduling;
 import com.example.demo.entity.SchedulingStuff;
+import com.example.demo.service.AppointmentService;
 import com.example.demo.service.DoctorService;
 import com.example.demo.service.SchedulingService;
 import com.example.demo.service.SchedulingStuffService;
 import com.example.demo.utils.DateUtils;
+import com.example.demo.utils.TSUtils;
 import com.example.demo.utils.TimeUtils;
 import com.example.demo.utils.VTypeUtils;
 import org.slf4j.Logger;
@@ -41,6 +44,9 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
     @Autowired
     private DoctorService doctorService;
 
+    @Autowired
+    private AppointmentService appointmentService;
+
     private static final long intervalValue = 600;
     private static final ChronoUnit intervalUnit = ChronoUnit.SECONDS;
 
@@ -49,6 +55,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
         logger.info("启动数据初始化：开始");
         genSchedulingStuffData();
         genNOSourceData();
+        genRegisteredNOSourceData();
         logger.info("启动数据初始化：完成");
     }
 
@@ -88,7 +95,6 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
             LocalDateTime ldt2 = TimeUtils.mergeDateToLocalDateTimeViaInstant(schedulingStuff.getDate(), schedulingStuff.getStartTime());//开始时间LocalDateTime
             if (ldt1.isBefore(ldt)) {//记录过期，删除该记录
                 schedulingStuffService.removeById(schedulingStuff.getId());
-                //todo expire edit this record status to expire
             } else {//记录未过期，生成号源
                 Map<String, List<AppointmentCache.NoSources>> doctorAppointments = AppointmentCache.mapDoctorAllNS(VTypeUtils.convertIntegerToLong(schedulingStuff.getDoctorId()));
                 if (ldt2.isAfter(ldt)) {
@@ -109,5 +115,14 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
             }
         });
         logger.info("初始化号池：结束");
+    }
+
+    private void genRegisteredNOSourceData() {
+        logger.info("初始化已预约号池：开始");
+        LambdaQueryWrapper<Appointment> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.gt(Appointment::getTime, TSUtils.currentTimestamp());
+        List<Appointment> appointmentList = appointmentService.list(queryWrapper);
+        appointmentList.forEach(appointment -> AppointmentCache.registerNoSource(appointment.getDoctorId(), appointment.getTime(), appointment.getUserId()));
+        logger.info("初始化已预约号池：结束");
     }
 }
