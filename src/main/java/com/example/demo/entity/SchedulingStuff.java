@@ -1,38 +1,37 @@
 package com.example.demo.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
 
+@Accessors(chain = true)
 @Data
 @ApiModel("排班员工")
 public class SchedulingStuff implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.AUTO)
     /**
      * id
      */
     @ApiModelProperty("id")
-    private Integer id;
+    private Long id;
 
     /**
      * 医生id
      */
     @ApiModelProperty("医生id")
-    private Integer doctorId;
+    private Long doctorId;
 
     /**
      * 排班id
      */
     @ApiModelProperty("排班id")
-    private Integer schedulingId;
+    private Long schedulingId;
 
     /**
      * 开始时间
@@ -56,7 +55,7 @@ public class SchedulingStuff implements Serializable {
      * 科室id
      */
     @ApiModelProperty("科室id")
-    private Integer departmentId;
+    private Long departmentId;
 
     /**
      * 排班日期
@@ -65,11 +64,8 @@ public class SchedulingStuff implements Serializable {
     private Date date;
 
     /**
-    * 排班状态，0:未完成;1:已完成
-    */
+     * 排班状态，0:未完成;1:已完成
+     */
     @ApiModelProperty("排班状态，0:未完成;1:已完成")
-    private int schedulingStatus;
-
-    public SchedulingStuff() {
-    }
+    private Integer schedulingStatus;
 }

@@ -3,34 +3,34 @@ package com.example.demo.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import java.io.Serializable;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
+@Accessors(chain = true)
 @Data
 @ApiModel("person")
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.AUTO)
     /**
      * uid
      */
     @ApiModelProperty("uid")
-    private Integer id;
+    private Long id;
 
     /**
      * username
      */
-    @ApiModelProperty("username")
-    private String username;
+    @ApiModelProperty("user_name")
+    private String userName;
 
     /**
      * user_age
      */
     @ApiModelProperty("user_age")
-    private int userAge;
+    private Integer userAge;
 
     /**
      * mobile
@@ -55,6 +55,4 @@ public class Person implements Serializable {
      */
     @ApiModelProperty("open_id")
     private String openId;
-
-    public Person() {}
 }

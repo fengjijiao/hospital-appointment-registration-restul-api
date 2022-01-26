@@ -1,0 +1,183 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.DoctorMapper">
+    <resultMap id="BeanResultMap" type="Doctor">
+        <result column="id" property="id"/>
+        <result column="doctor_name" property="doctorName"/>
+        <result column="doctor_sex" property="doctorSex"/>
+        <result column="department_id" property="departmentId"/>
+        <result column="doctor_job_title" property="doctorJobTitle"/>
+        <result column="doctor_status" property="doctorStatus"/>
+    </resultMap>
+    <sql id="Bean_Column_List">
+        id,
+        doctor_name,
+        doctor_sex,
+        department_id,
+        doctor_job_title,
+        doctor_status
+    </sql>
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="Doctor">
+        INSERT INTO doctor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != id and '' != id">
+                id,
+            </if>
+            <if test="null != doctorName and '' != doctorName">
+                doctor_name,
+            </if>
+            <if test="null != doctorSex and '' != doctorSex">
+                doctor_sex,
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                department_id,
+            </if>
+            <if test="null != doctorJobTitle and '' != doctorJobTitle">
+                doctor_job_title,
+            </if>
+            <if test="null != doctorStatus and '' != doctorStatus">
+                doctor_status
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null != id and '' != id">
+                #{id}
+            </if>
+            <if test="null != doctorName and '' != doctorName">
+                #{doctorName},
+            </if>
+            <if test="null != doctorSex and '' != doctorSex">
+                #{doctorSex},
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                #{departmentId},
+            </if>
+            <if test="null != doctorJobTitle and '' != doctorJobTitle">
+                #{doctorJobTitle},
+            </if>
+            <if test="null != doctorStatus and '' != doctorStatus">
+                #{doctorStatus}
+            </if>
+        </trim>
+    </insert>
+    <select id="getById" resultType="Doctor">
+        SELECT <include refid="Bean_Column_List"/>
+        FROM doctor
+        WHERE id = #{id};
+    </select>
+    <select id="pageList" resultType="Doctor">
+        SELECT <include refid="Bean_Column_List"/>
+        FROM doctor
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id = #{id}
+        </if>
+        <if test="doctorName != null and doctorName != ''">
+            AND doctor_name = #{doctorName}
+        </if>
+        <if test="doctorSex != null and doctorSex != ''">
+            AND doctor_sex = #{doctorSex}
+        </if>
+        <if test="departmentId != null and departmentId != ''">
+            AND department_id = #{departmentId}
+        </if>
+        <if test="doctorJobTitle != null and doctorJobTitle != ''">
+            AND doctor_job_title = #{doctorJobTitle}
+        </if>
+        <if test="doctorStatus != null and doctorStatus != ''">
+            AND doctor_status = #{doctorStatus}
+        </if>
+        LIMIT ${page}, ${limit}
+    </select>
+    <select id="list" resultType="Doctor"
+            parameterType="Doctor">
+        SELECT <include refid="Bean_Column_List"/>
+        FROM doctor
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id = #{id}
+        </if>
+        <if test="doctorName != null and doctorName != ''">
+            AND doctor_name = #{doctorName}
+        </if>
+        <if test="doctorSex != null and doctorSex != ''">
+            AND doctor_sex = #{doctorSex}
+        </if>
+        <if test="departmentId != null and departmentId != ''">
+            AND department_id = #{departmentId}
+        </if>
+        <if test="doctorJobTitle != null and doctorJobTitle != ''">
+            AND doctor_job_title = #{doctorJobTitle}
+        </if>
+        <if test="doctorStatus != null and doctorStatus != ''">
+            AND doctor_status = #{doctorStatus}
+        </if>
+    </select>
+    <select id="countList" resultType="java.lang.Integer" parameterType="Doctor">
+        SELECT count(1)
+        FROM doctor
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id = #{id}
+        </if>
+        <if test="doctorName != null and doctorName != ''">
+            AND doctor_name = #{doctorName}
+        </if>
+        <if test="doctorSex != null and doctorSex != ''">
+            AND doctor_sex = #{doctorSex}
+        </if>
+        <if test="departmentId != null and departmentId != ''">
+            AND department_id = #{departmentId}
+        </if>
+        <if test="doctorJobTitle != null and doctorJobTitle != ''">
+            AND doctor_job_title = #{doctorJobTitle}
+        </if>
+        <if test="doctorStatus != null and doctorStatus != ''">
+            AND doctor_status = #{doctorStatus}
+        </if>
+    </select>
+    <select id="getOne" resultType="Doctor"
+            parameterType="Doctor">
+        SELECT <include refid="Bean_Column_List"/>
+        FROM doctor
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id = #{id}
+        </if>
+        <if test="doctorName != null and doctorName != ''">
+            AND doctor_name = #{doctorName}
+        </if>
+        <if test="doctorSex != null and doctorSex != ''">
+            AND doctor_sex = #{doctorSex}
+        </if>
+        <if test="departmentId != null and departmentId != ''">
+            AND department_id = #{departmentId}
+        </if>
+        <if test="doctorJobTitle != null and doctorJobTitle != ''">
+            AND doctor_job_title = #{doctorJobTitle}
+        </if>
+        <if test="doctorStatus != null and doctorStatus != ''">
+            AND doctor_status = #{doctorStatus}
+        </if>
+        LIMIT 1
+    </select>
+    <update id="update" parameterType="Doctor">
+        UPDATE doctor
+        <set>
+            <if test="null != doctorName and '' != doctorName">doctor_name = #{doctorName},</if>
+            <if test="null != doctorSex and '' != doctorSex">doctor_sex = #{doctorSex},</if>
+            <if test="null != departmentId and '' != departmentId">department_id = #{departmentId},</if>
+            <if test="null != doctorJobTitle and '' != doctorJobTitle">doctor_job_title = #{doctorJobTitle},</if>
+            <if test="null != doctorStatus and '' != doctorStatus">doctor_status = #{doctorStatus}</if>
+        </set>
+        WHERE id = #{id};
+    </update>
+    <delete id="removeById">
+        DELETE
+        FROM doctor
+        WHERE id = #{id};
+    </delete>
+</mapper>

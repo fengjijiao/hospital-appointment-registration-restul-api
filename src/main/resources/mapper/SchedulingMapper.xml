@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SchedulingMapper">
+
+    <resultMap id="BaseResultMap" type="Scheduling" >
+        <result column="id" property="id" />
+        <result column="department_id" property="departmentId" />
+        <result column="date" property="date" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="add_time" property="addTime" />
+        <result column="scheduling_status" property="schedulingStatus" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        department_id,
+        `date`,
+        start_time,
+        end_time,
+        add_time,
+        scheduling_status
+    </sql>
+
+    <sql id="Base_Table_Name">
+        scheduling
+    </sql>
+
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id" parameterType="Scheduling">
+        INSERT INTO <include refid="Base_Table_Name"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != id and '' != id">
+                id,
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                department_id,
+            </if>
+            <if test="null != date and '' != date">
+                `date`,
+            </if>
+            <if test="null != startTime and '' != startTime">
+                start_time,
+            </if>
+            <if test="null != endTime and '' != endTime">
+                end_time,
+            </if>
+            <if test="null != addTime and '' != addTime">
+                add_time,
+            </if>
+            <if test="null != schedulingStatus and '' != schedulingStatus">
+                scheduling_status
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="null != id and '' != id">
+                #{id},
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                #{departmentId},
+            </if>
+            <if test="null != date and '' != date">
+                #{date},
+            </if>
+            <if test="null != startTime and '' != startTime">
+                #{startTime},
+            </if>
+            <if test="null != endTime and '' != endTime">
+                #{endTime},
+            </if>
+            <if test="null != addTime and '' != addTime">
+                #{addTime},
+            </if>
+            <if test="null != schedulingStatus and '' != schedulingStatus">
+                #{schedulingStatus}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getById" resultType="Scheduling">
+        SELECT <include refid="Base_Column_List"/>
+        FROM <include refid="Base_Table_Name"/>
+        WHERE id = #{id};
+    </select>
+    <select id="pageList" resultType="Scheduling">
+        SELECT <include refid="Base_Column_List"/>
+        FROM <include refid="Base_Table_Name"/>
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id==#{id}
+        </if>
+        <if test="null != departmentId and '' != departmentId">
+            AND department_id=#{departmentId}
+        </if>
+        <if test="null != date and '' != date">
+            AND `date`=#{date}
+        </if>
+        <if test="null != startTime and '' != startTime">
+            AND start_time=#{startTime}
+        </if>
+        <if test="null != endTime and '' != endTime">
+            AND end_time=#{endTime}
+        </if>
+        <if test="null != addTime and '' != addTime">
+            AND  add_time=#{addTime}
+        </if>
+        <if test="null != departmentId and '' != departmentId">
+            AND department_id=#{departmentId}
+        </if>
+        <if test="null != schedulingStatus and '' != schedulingStatus">
+            AND scheduling_status=#{schedulingStatus}
+        </if>
+        LIMIT ${page}, ${limit}
+    </select>
+    <select id="list" resultType="Scheduling"
+            parameterType="Scheduling">
+        SELECT <include refid="Base_Column_List"/>
+        FROM <include refid="Base_Table_Name"/>
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id==#{id}
+        </if>
+        <if test="null != departmentId and '' != departmentId">
+            AND department_id=#{departmentId}
+        </if>
+        <if test="null != date and '' != date">
+            AND `date`=#{date}
+        </if>
+        <if test="null != startTime and '' != startTime">
+            AND start_time=#{startTime}
+        </if>
+        <if test="null != endTime and '' != endTime">
+            AND end_time=#{endTime}
+        </if>
+        <if test="null != addTime and '' != addTime">
+            AND  add_time=#{addTime}
+        </if>
+        <if test="null != departmentId and '' != departmentId">
+            AND department_id=#{departmentId}
+        </if>
+        <if test="null != schedulingStatus and '' != schedulingStatus">
+            AND scheduling_status=#{schedulingStatus}
+        </if>
+    </select>
+    <select id="countList" resultType="int" parameterType="Scheduling">
+        SELECT count(1)
+        FROM <include refid="Base_Table_Name"/>
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id==#{id}
+        </if>
+        <if test="null != departmentId and '' != departmentId">
+            AND department_id=#{departmentId}
+        </if>
+        <if test="null != date and '' != date">
+            AND `date`=#{date}
+        </if>
+        <if test="null != startTime and '' != startTime">
+            AND start_time=#{startTime}
+        </if>
+        <if test="null != endTime and '' != endTime">
+            AND end_time=#{endTime}
+        </if>
+        <if test="null != addTime and '' != addTime">
+            AND  add_time=#{addTime}
+        </if>
+        <if test="null != departmentId and '' != departmentId">
+            AND department_id=#{departmentId}
+        </if>
+        <if test="null != schedulingStatus and '' != schedulingStatus">
+            AND scheduling_status=#{schedulingStatus}
+        </if>
+    </select>
+    <select id="getOne" resultType="Scheduling"
+            parameterType="Scheduling">
+        SELECT <include refid="Base_Column_List"/>
+        FROM <include refid="Base_Table_Name"/>
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id==#{id}
+        </if>
+        <if test="null != departmentId and '' != departmentId">
+            AND department_id=#{departmentId}
+        </if>
+        <if test="null != date and '' != date">
+            AND `date`=#{date}
+        </if>
+        <if test="null != startTime and '' != startTime">
+            AND start_time=#{startTime}
+        </if>
+        <if test="null != endTime and '' != endTime">
+            AND end_time=#{endTime}
+        </if>
+        <if test="null != addTime and '' != addTime">
+            AND  add_time=#{addTime}
+        </if>
+        <if test="null != departmentId and '' != departmentId">
+            AND department_id=#{departmentId}
+        </if>
+        <if test="null != schedulingStatus and '' != schedulingStatus">
+            AND scheduling_status=#{schedulingStatus}
+        </if>
+        LIMIT 1
+    </select>
+    <select id="validList" resultType="Scheduling">
+        SELECT <include refid="Base_Column_List"/>
+        FROM <include refid="Base_Table_Name"/>
+        WHERE
+        `date` >= ${date} AND scheduling_status = 0
+    </select>
+    <update id="update" parameterType="Scheduling">
+        UPDATE scheduling
+        <set>
+            <if test="null != departmentId and '' != departmentId">department_id = #{departmentId},</if>
+            <if test="null != date and '' != date">`date` = #{date},</if>
+            <if test="null != startTime and '' != startTime">start_time = #{startTime},</if>
+            <if test="null != endTime and '' != endTime">end_time = #{endTime},</if>
+            <if test="null != addTime and '' != addTime">add_time = #{addTime},</if>
+            <if test="null != schedulingStatus and '' != schedulingStatus">scheduling_status = #{schedulingStatus}</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <delete id="removeById">
+        DELETE FROM <include refid="Base_Table_Name"/> WHERE id = #{id};
+    </delete>
+    <delete id="clear">
+        DELETE FROM <include refid="Base_Table_Name"/>
+    </delete>
+
+</mapper>

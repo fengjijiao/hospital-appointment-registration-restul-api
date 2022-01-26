@@ -1,25 +1,24 @@
 package com.example.demo.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
+@Accessors(chain = true)
 @Data
 @ApiModel("doctor")
 public class Doctor implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.AUTO)
     /**
      * id
      */
     @ApiModelProperty("id")
-    private Integer id;
+    private Long id;
 
     /**
      * 医生姓名
@@ -37,20 +36,17 @@ public class Doctor implements Serializable {
      * did
      */
     @ApiModelProperty("did")
-    private Integer departmentId;
+    private Long departmentId;
 
     /**
      * 医生职称
      */
     @ApiModelProperty("医生职称")
-    private int doctorJobTitle;
+    private Integer doctorJobTitle;
 
     /**
      * 医生状态，0:正常;1:~
      */
     @ApiModelProperty("医生状态，0:正常;1:~")
-    private int doctorStatus;
-
-    public Doctor() {
-    }
+    private Integer doctorStatus;
 }

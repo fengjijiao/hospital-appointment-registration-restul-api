@@ -18,6 +18,10 @@ public class TimeUtils {
         return Time.valueOf(LocalTime.now());
     }
 
+    public static String getCurrentTimeStr() {
+        return getTimeStrFromTimestamp(System.currentTimeMillis()/1000);
+    }
+
     public static Date convertToDateViaInstant(LocalTime localTime) {
         Instant instant = localTime.atDate(LocalDate.now().withYear(1970).withMonth(1).withDayOfMonth(1))
                 .atZone(ZoneId.of("Asia/Shanghai")).toInstant();

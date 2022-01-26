@@ -1,0 +1,204 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.PersonMapper">
+    <resultMap id="BeanResultMap" type="com.example.demo.entity.Person">
+        <result column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_age" property="userAge"/>
+        <result column="mobile" property="mobile"/>
+        <result column="sex" property="sex"/>
+        <result column="id_card_no" property="idCardNo"/>
+        <result column="open_id" property="openId"/>
+    </resultMap>
+    <sql id="Bean_Column_List">
+        id,
+        user_name,
+        user_age,
+        mobile,
+        sex,
+        id_card_no,
+        open_id
+    </sql>
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+            parameterType="com.example.demo.entity.Person">
+        INSERT INTO person
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != id and '' != id">
+                id,
+            </if>
+            <if test="null != userName and '' != userName">
+                user_name,
+            </if>
+            <if test="null != userAge and '' != userAge">
+                user_age,
+            </if>
+            <if test="null != mobile and '' != mobile">
+                mobile,
+            </if>
+            <if test="null != sex and '' != sex">
+                sex,
+            </if>
+            <if test="null != idCardNo and '' != idCardNo">
+                id_card_no,
+            </if>
+            <if test="null != openId and '' != openId">
+                open_id
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null != id and '' != id">
+                #{id},
+            </if>
+            <if test="null != userName and '' != userName">
+                #{userName},
+            </if>
+            <if test="null != userAge and '' != userAge">
+                #{userAge},
+            </if>
+            <if test="null != mobile and '' != mobile">
+                #{mobile},
+            </if>
+            <if test="null != sex and '' != sex">
+                #{sex},
+            </if>
+            <if test="null != idCardNo and '' != idCardNo">
+                #{idCardNo},
+            </if>
+            <if test="null != openId and '' != openId">
+                #{openId}
+            </if>
+        </trim>
+    </insert>
+    <select id="getById" resultType="com.example.demo.entity.Person">
+        SELECT <include refid="Bean_Column_List"/>
+        FROM person
+        WHERE id = #{id};
+    </select>
+    <select id="pageList" resultType="com.example.demo.entity.Person">
+        SELECT <include refid="Bean_Column_List"/>
+        FROM person
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id = #{id}
+        </if>
+        <if test="userName != null and userName != ''">
+            AND user_name = #{userName}
+        </if>
+        <if test="userAge != null and userAge != ''">
+            AND user_age = #{userAge}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            AND mobile = #{mobile}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND sex = #{sex}
+        </if>
+        <if test="idCardNo != null and idCardNo != ''">
+            AND id_card_no = #{idCardNo}
+        </if>
+        <if test="openId != null and openId != ''">
+            AND open_id = #{openId}
+        </if>
+        LIMIT ${page}, ${limit}
+    </select>
+    <select id="list" resultType="com.example.demo.entity.Person"
+            parameterType="com.example.demo.entity.Person">
+        SELECT <include refid="Bean_Column_List"/>
+        FROM person
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id = #{id}
+        </if>
+        <if test="userName != null and userName != ''">
+            AND user_name = #{userName}
+        </if>
+        <if test="userAge != null and userAge != ''">
+            AND user_age = #{userAge}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            AND mobile = #{mobile}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND sex = #{sex}
+        </if>
+        <if test="idCardNo != null and idCardNo != ''">
+            AND id_card_no = #{idCardNo}
+        </if>
+        <if test="openId != null and openId != ''">
+            AND open_id = #{openId}
+        </if>
+    </select>
+    <select id="countList" resultType="java.lang.Integer" parameterType="com.example.demo.entity.Person">
+        SELECT count(1)
+        FROM person
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id = #{id}
+        </if>
+        <if test="userName != null and userName != ''">
+            AND user_name = #{userName}
+        </if>
+        <if test="userAge != null and userAge != ''">
+            AND user_age = #{userAge}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            AND mobile = #{mobile}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND sex = #{sex}
+        </if>
+        <if test="idCardNo != null and idCardNo != ''">
+            AND id_card_no = #{idCardNo}
+        </if>
+        <if test="openId != null and openId != ''">
+            AND open_id = #{openId}
+        </if>
+    </select>
+    <select id="getOne" resultType="com.example.demo.entity.Person"
+            parameterType="com.example.demo.entity.Person">
+        SELECT <include refid="Bean_Column_List"/>
+        FROM person
+        WHERE 1=1
+        <if test="null != id and '' != id">
+            AND id = #{id}
+        </if>
+        <if test="userName != null and userName != ''">
+            AND user_name = #{userName}
+        </if>
+        <if test="userAge != null and userAge != ''">
+            AND user_age = #{userAge}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            AND mobile = #{mobile}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND sex = #{sex}
+        </if>
+        <if test="idCardNo != null and idCardNo != ''">
+            AND id_card_no = #{idCardNo}
+        </if>
+        <if test="openId != null and openId != ''">
+            AND open_id = #{openId}
+        </if>
+        LIMIT 1
+    </select>
+    <update id="update" parameterType="com.example.demo.entity.Person">
+        UPDATE person
+        <set>
+            <if test="null != userName and '' != userName">user_name = #{userName},</if>
+            <if test="null != userAge and '' != userAge">user_age = #{userAge},</if>
+            <if test="null != mobile and '' != mobile">mobile = #{mobile},</if>
+            <if test="null != sex and '' != sex">sex = #{sex},</if>
+            <if test="null != idCardNo and '' != idCardNo">id_card_no = #{idCardNo}</if>
+            <if test="null != openId and '' != openId">open_id = #{openId}</if>
+        </set>
+        WHERE id = #{id};
+    </update>
+    <delete id="removeById">
+        DELETE
+        FROM person
+        WHERE id = #{id};
+    </delete>
+</mapper>

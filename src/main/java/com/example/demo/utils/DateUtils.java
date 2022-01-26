@@ -20,6 +20,10 @@ public class DateUtils {
         return convertToDateViaInstant(ldt.toLocalDate());
     }
 
+    public static String getCurrentDateStr() {
+        return getDateStrFromTimestamp(System.currentTimeMillis()/1000);
+    }
+
     public static Date convertToDateViaInstant(LocalDate localDate) {
         return java.util.Date.from(localDate.atStartOfDay().atZone(ZoneId.of("Asia/Shanghai")).toInstant());
     }

@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.demo.common.vo.R;
 import com.example.demo.constant.AppointmentCache;
 import com.example.demo.constant.DefaultConstant;
@@ -10,6 +9,7 @@ import com.example.demo.entity.Appointment;
 import com.example.demo.entity.Doctor;
 import com.example.demo.service.AppointmentService;
 import com.example.demo.service.DoctorService;
+import com.example.demo.utils.TimeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -53,19 +53,15 @@ public class AppointmentController {
         List<Map.Entry<String, List<AppointmentCache.NoSources>>> dataSet = new ArrayList<>(data.entrySet());
         dataSet.sort(Map.Entry.comparingByKey());
         data.forEach((key, value) -> value.sort((o1, o2) -> (int) (o1.getTimestamp() - o2.getTimestamp())));
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
         long currentTS = System.currentTimeMillis() / 1000;
         dataSet.forEach(integerListEntry -> {
-            AtomicLong time = new AtomicLong();
             JSONArray jsonArray = new JSONArray();
             integerListEntry.getValue().forEach(ns -> {
                 if (currentTS < ns.getTimestamp()) {
-                    time.set(ns.getTimestamp());
-                    LocalDateTime ldt = LocalDateTime.ofEpochSecond(time.get(), 0, ZoneOffset.of("+8"));
+                    LocalDateTime ldt = LocalDateTime.ofEpochSecond(ns.getTimestamp(), 0, ZoneOffset.of("+8"));
                     JSONObject jsonObject1 = new JSONObject();
                     jsonObject1.put("time", ns.getTimestamp());
-                    jsonObject1.put("time1", sdf.format(ns.getTimestamp() * 1000));
+                    jsonObject1.put("time1", TimeUtils.getTimeStrFromTimestamp(ns.getTimestamp() * 1000));
                     jsonObject1.put("checked", ns.getChecked());
                     jsonObject1.put("checked1", ns.getChecked() ? "已被预约" : "未被预约");
                     jsonObject1.put("dayOfWeek", ldt.getDayOfWeek().getValue());
@@ -79,7 +75,7 @@ public class AppointmentController {
                 JSONObject jsonObject1 = new JSONObject();
                 jsonObject1.put("length", integerListEntry.getValue().size());
                 jsonObject1.put("data", jsonArray);
-                jsonObject.put(sdf1.format(time.get() * 1000), jsonObject1);
+                jsonObject.put(integerListEntry.getKey(), jsonObject1);
             }
         });
         return R.ok().put("result", jsonObject);
@@ -108,8 +104,8 @@ public class AppointmentController {
             Appointment appointment = new Appointment();
             appointment.setDepartmentId(doctor.getDepartmentId());
             appointment.setDoctorId(doctor.getId());
-            appointment.setUserId(Integer.parseInt(""+userId));
-            appointment.setTime(Integer.parseInt(""+time));
+            appointment.setUserId(userId);
+            appointment.setTime(time);
             boolean result1 = appointmentService.save(appointment);
             return R.ok().put("result", result1);
         } else {
@@ -137,11 +133,11 @@ public class AppointmentController {
         }
         boolean result = AppointmentCache.unRegisterNoSource(doctorId, time);
         if (result) {
-            LambdaQueryWrapper<Appointment> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(Appointment::getUserId, userId);
-            queryWrapper.eq(Appointment::getTime, time);
-            queryWrapper.eq(Appointment::getDoctorId, doctorId);
-            boolean result1 = appointmentService.remove(queryWrapper);
+            Appointment appointment = new Appointment();
+            appointment.setUserId(userId)
+                    .setTime(time)
+                    .setDoctorId(doctorId);
+            boolean result1 = appointmentService.remove(appointment);
             return R.ok().put("result", result1);
         } else {
             return R.ok().put("result", false);

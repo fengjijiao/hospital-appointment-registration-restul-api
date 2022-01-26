@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.alibaba.fastjson.JSONObject;
 import com.example.demo.common.vo.R;
 import com.example.demo.entity.Hospital;
 import com.example.demo.service.HospitalService;
@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Api(tags = "医院相关接口")
 @Controller
@@ -27,7 +30,7 @@ public class HospitalController {
     @GetMapping("/list")
     @ResponseBody
     public R list() {
-        List<Hospital> hospitalList = hospitalService.list();
+        List<Hospital> hospitalList = hospitalService.list(new Hospital());
         return R.ok().put(hospitalList.size(), hospitalList);
     }
 
@@ -35,18 +38,33 @@ public class HospitalController {
     @GetMapping("/get")
     @ResponseBody
     public R get(@ApiParam(name = "id", value = "医院ID", required = true, defaultValue = "1") @RequestParam(name = "id") Long hospitalId) {
-        LambdaQueryWrapper<Hospital> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Hospital::getId, hospitalId);
-        return R.ok().put("result", hospitalService.getOne(queryWrapper));
+        return R.ok().put("result", hospitalService.getById(hospitalId));
+    }
+
+    @ApiOperation(value = "获取特定医院信息（聚合）", notes = "通过医院ID")
+    @GetMapping("/getPoly")
+    @ResponseBody
+    public R getPoly(@ApiParam(name = "id", value = "医院ID", required = true, defaultValue = "1") @RequestParam(name = "id") Long hospitalId) {
+        Hospital masterHospitalDO = hospitalService.getById(hospitalId);
+        JSONObject result = new JSONObject(new LinkedHashMap<>());
+        if (null != masterHospitalDO) {
+            result.put("master", masterHospitalDO);
+            Hospital hospitalDTO = new Hospital();
+            hospitalDTO.setHospitalParentId(hospitalId);
+            List<Hospital> slaveHospitalDO = hospitalService.list(hospitalDTO);
+            result.put("slave", slaveHospitalDO);
+            result.put("slaveLength", slaveHospitalDO.size());
+        }
+        return R.ok().put("result", result);
     }
 
     @ApiOperation(value = "获取子医院信息", notes = "通过总院ID")
     @GetMapping("/listSubHospital")
     @ResponseBody
     public R listSubHospital(@ApiParam(name = "id", value = "医院ID", required = true, defaultValue = "1") @RequestParam(name = "id") Long hospitalId) {
-        LambdaQueryWrapper<Hospital> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Hospital::getHospitalParentId, hospitalId);
-        List<Hospital> hospitalList = hospitalService.list(queryWrapper);
+        Hospital hospitalDTO = new Hospital();
+        hospitalDTO.setHospitalParentId(hospitalId);
+        List<Hospital> hospitalList = hospitalService.list(hospitalDTO);
         return R.ok().put(hospitalList.size(), hospitalList);
     }
 }

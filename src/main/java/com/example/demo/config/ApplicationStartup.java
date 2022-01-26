@@ -1,7 +1,5 @@
 package com.example.demo.config;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.constant.AppointmentCache;
 import com.example.demo.entity.Appointment;
 import com.example.demo.entity.Doctor;
@@ -14,7 +12,6 @@ import com.example.demo.service.SchedulingStuffService;
 import com.example.demo.utils.DateUtils;
 import com.example.demo.utils.TSUtils;
 import com.example.demo.utils.TimeUtils;
-import com.example.demo.utils.VTypeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +20,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
@@ -35,7 +33,7 @@ import java.util.Map;
 public class ApplicationStartup implements ApplicationListener<ContextRefreshedEvent> {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationStartup.class);
 
-    @Autowired
+    @Resource
     private SchedulingService schedulingService;
 
     @Autowired
@@ -61,24 +59,23 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
 
     private void genSchedulingStuffData() {
         logger.info("Generate Shift Schedule: start");
-        LambdaQueryWrapper<Scheduling> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.gt(Scheduling::getDate, DateUtils.getCurrentDate()).eq(Scheduling::getSchedulingStatus, 0)
-                .or(wrapper -> wrapper.eq(Scheduling::getDate, DateUtils.getCurrentDate()).eq(Scheduling::getSchedulingStatus, 0));
-        List<Scheduling> schedulingList = schedulingService.list(queryWrapper);
-        schedulingStuffService.remove(new QueryWrapper<>());
+        List<Scheduling> schedulingList = schedulingService.validList(DateUtils.getCurrentDateStr());
+        schedulingStuffService.clear();
         schedulingList.forEach(scheduling -> {
-            LambdaQueryWrapper<Doctor> queryWrapper1 = new LambdaQueryWrapper<>();
-            queryWrapper1.eq(Doctor::getDepartmentId, scheduling.getDepartmentId()).eq(Doctor::getDoctorStatus, 0);
-            List<Doctor> doctorList = doctorService.list(queryWrapper1);
+            Doctor doctorDTO = new Doctor();
+            doctorDTO
+                    .setDepartmentId(scheduling.getDepartmentId())
+                    .setDoctorStatus(0);
+            List<Doctor> doctorList = doctorService.list(doctorDTO);
             doctorList.forEach(doctor -> {
-                SchedulingStuff ss = new SchedulingStuff();
-                ss.setDepartmentId(scheduling.getDepartmentId());
-                ss.setDoctorId(doctor.getId());
-                ss.setSchedulingId(scheduling.getId());
-                ss.setStartTime(scheduling.getStartTime());
-                ss.setEndTime(scheduling.getEndTime());
-                ss.setDate(scheduling.getDate());
-                schedulingStuffService.save(ss);
+                SchedulingStuff schedulingStuffDTO = new SchedulingStuff();
+                schedulingStuffDTO.setDepartmentId(scheduling.getDepartmentId());
+                schedulingStuffDTO.setDoctorId(doctor.getId());
+                schedulingStuffDTO.setSchedulingId(scheduling.getId());
+                schedulingStuffDTO.setStartTime(scheduling.getStartTime());
+                schedulingStuffDTO.setEndTime(scheduling.getEndTime());
+                schedulingStuffDTO.setDate(scheduling.getDate());
+                schedulingStuffService.save(schedulingStuffDTO);
             });
         });
         logger.info("Generate Shift Schedule: end");
@@ -86,10 +83,8 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
 
     private void genNOSourceData() {
         logger.info("Initialization pool: start");
-        LambdaQueryWrapper<SchedulingStuff> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.gt(SchedulingStuff::getEndTime, TimeUtils.getCurrentTime()).eq(SchedulingStuff::getSchedulingStatus, 0)
-                .or(wrapper -> wrapper.gt(SchedulingStuff::getDate, DateUtils.getCurrentDate()).eq(SchedulingStuff::getSchedulingStatus, 0));
-        List<SchedulingStuff> schedulingStuffList = schedulingStuffService.list(queryWrapper);
+        List<SchedulingStuff> schedulingStuffList = schedulingStuffService
+                .validList(DateUtils.getCurrentDateStr(), TimeUtils.getCurrentTimeStr());
         schedulingStuffList.forEach(schedulingStuff -> {
             LocalDateTime ldt = LocalDateTime.now();
             LocalDateTime ldt1 = TimeUtils.mergeDateToLocalDateTimeViaInstant(schedulingStuff.getDate(), schedulingStuff.getEndTime());
@@ -97,7 +92,8 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
             if (ldt1.isBefore(ldt)) {
                 schedulingStuffService.removeById(schedulingStuff.getId());
             } else {
-                Map<String, List<AppointmentCache.NoSources>> doctorAppointments = AppointmentCache.mapDoctorAllNS(VTypeUtils.convertIntegerToLong(schedulingStuff.getDoctorId()));
+                Map<String, List<AppointmentCache.NoSources>> doctorAppointments = AppointmentCache
+                        .mapDoctorAllNS(schedulingStuff.getDoctorId());
                 if (ldt2.isAfter(ldt)) {
                     ldt = ldt2;
                 }
@@ -120,9 +116,7 @@ public class ApplicationStartup implements ApplicationListener<ContextRefreshedE
 
     private void genRegisteredNOSourceData() {
         logger.info("Initialize reserved number pool: start");
-        LambdaQueryWrapper<Appointment> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.gt(Appointment::getTime, TSUtils.currentTimestamp());
-        List<Appointment> appointmentList = appointmentService.list(queryWrapper);
+        List<Appointment> appointmentList = appointmentService.validList(TSUtils.currentTimestamp());
         appointmentList.forEach(appointment -> AppointmentCache.registerNoSource(appointment.getDoctorId(), appointment.getTime(), appointment.getUserId()));
         logger.info("Initialize reserved number pool: end");
     }

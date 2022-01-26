@@ -30,7 +30,7 @@ public class PersonController {
     @GetMapping("/list")
     @ResponseBody
     public R list() {
-        List<Person> personList = personService.list();
+        List<Person> personList = personService.list(new Person());
         return R.ok().put(personList.size(), personList);
     }
 

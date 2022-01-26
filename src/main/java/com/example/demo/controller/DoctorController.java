@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.demo.common.vo.R;
 import com.example.demo.entity.Doctor;
 import com.example.demo.service.DoctorService;
@@ -28,7 +27,7 @@ public class DoctorController {
     @GetMapping("/list")
     @ResponseBody
     public R list() {
-        List<Doctor> doctorList = doctorService.list();
+        List<Doctor> doctorList = doctorService.list(new Doctor());
         return R.ok().put(doctorList.size(), doctorList);
     }
 
@@ -43,9 +42,9 @@ public class DoctorController {
     @GetMapping("/listByDepartmentId")
     @ResponseBody
     public R listByDepartmentId(@ApiParam(name = "id", value = "科室ID", required = true, defaultValue = "3") @RequestParam(name = "id") Long departmentId) {
-        LambdaQueryWrapper<Doctor> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Doctor::getDepartmentId, departmentId);
-        List<Doctor> doctorList = doctorService.list(queryWrapper);
+        Doctor doctorDTO = new Doctor();
+        doctorDTO.setDepartmentId(departmentId);
+        List<Doctor> doctorList = doctorService.list(doctorDTO);
         return R.ok().put(doctorList.size(), doctorList);
     }
 }

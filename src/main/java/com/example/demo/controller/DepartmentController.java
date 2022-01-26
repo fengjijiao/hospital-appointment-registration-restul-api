@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.example.demo.common.vo.R;
 import com.example.demo.entity.Department;
 import com.example.demo.service.DepartmentService;
@@ -34,9 +33,10 @@ public class DepartmentController {
     @GetMapping("/listFC")
     @ResponseBody
     public R listFC(@ApiParam(name = "id", value = "医院ID", required = true, defaultValue = "2") @RequestParam(name = "id") Long hospitalId) {
-        LambdaQueryWrapper<Department> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Department::getHospitalId, hospitalId).eq(Department::getParentId, 0);
-        List<Department> departmentList = departmentService.list(queryWrapper);
+        Department queryParamDTO = new Department();
+        queryParamDTO.setHospitalId(hospitalId);
+        queryParamDTO.setParentId(0L);
+        List<Department> departmentList = departmentService.list(queryParamDTO);
         return R.ok().put(departmentList.size(), departmentList);
     }
 
@@ -50,9 +50,9 @@ public class DepartmentController {
     @GetMapping("/listSC")
     @ResponseBody
     public R listSC(@ApiParam(name = "id", value = "一级科室ID", required = true, defaultValue = "1") @RequestParam(name = "id") Long fcId) {
-        LambdaQueryWrapper<Department> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Department::getParentId, fcId);
-        List<Department> departmentList = departmentService.list(queryWrapper);
+        Department queryParamDTO = new Department();
+        queryParamDTO.setParentId(fcId);
+        List<Department> departmentList = departmentService.list(queryParamDTO);
         return R.ok().put(departmentList.size(), departmentList);
     }
 
