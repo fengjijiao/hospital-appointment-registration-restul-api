@@ -83,10 +83,13 @@ public class AppointmentCache {
         NoSources ns = nss.stream().filter(noSources -> timestamp.equals(noSources.getTimestamp())).findFirst().orElse(null);
         if (ns == null || ns.checked) return false;
         nsl.lock();
-        ns.checked = true;
-        ns.parentId = parentId;
-        nsl.unlock();
-        return true;
+        try {
+            ns.checked = true;
+            ns.parentId = parentId;
+            return true;
+        }finally {
+            nsl.unlock();
+        }
     }
 
     public static Boolean unRegisterNoSource(Integer doctorId, Integer timestamp) {
@@ -101,9 +104,12 @@ public class AppointmentCache {
         NoSources ns = nss.stream().filter(noSources -> timestamp.equals(noSources.getTimestamp())).findFirst().orElse(null);
         if (ns == null || !ns.checked) return false;
         nsl.lock();
-        ns.checked = false;
-        ns.parentId = -1L;
-        nsl.unlock();
-        return true;
+        try {
+            ns.checked = false;
+            ns.parentId = -1L;
+            return true;
+        }finally {
+            nsl.unlock();
+        }
     }
 }

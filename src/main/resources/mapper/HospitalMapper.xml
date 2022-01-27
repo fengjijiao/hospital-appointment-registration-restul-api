@@ -78,109 +78,113 @@
     <select id="pageList" resultType="com.example.demo.entity.Hospital">
         SELECT <include refid="Bean_Column_List"/>
         FROM hospital
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id=#{id}
-        </if>
-        <if test="hospitalName != null and hospitalName != ''">
-            AND hospital_name=#{hospitalName}
-        </if>
-        <if test="hospitalContact != null and hospitalContact != ''">
-            AND hospital_contact=#{hospitalContact}
-        </if>
-        <if test="hospitalLevel != null and hospitalLevel != ''">
-            AND hospital_level=#{hospitalLevel}
-        </if>
-        <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
-            AND hospital_branch_type=#{hospitalBranchType}
-        </if>
-        <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
-            AND hospital_introduction=#{hospitalIntroduction}
-        </if>
-        <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
-            AND hospital_parent_id=#{hospitalParentId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id=#{id}
+            </if>
+            <if test="hospitalName != null and hospitalName != ''">
+                AND hospital_name=#{hospitalName}
+            </if>
+            <if test="hospitalContact != null and hospitalContact != ''">
+                AND hospital_contact=#{hospitalContact}
+            </if>
+            <if test="hospitalLevel != null and hospitalLevel != ''">
+                AND hospital_level=#{hospitalLevel}
+            </if>
+            <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
+                AND hospital_branch_type=#{hospitalBranchType}
+            </if>
+            <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
+                AND hospital_introduction=#{hospitalIntroduction}
+            </if>
+            <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
+                AND hospital_parent_id=#{hospitalParentId}
+            </if>
+        </where>
         LIMIT ${page}, ${limit}
     </select>
     <select id="list" resultType="com.example.demo.entity.Hospital"
             parameterType="com.example.demo.entity.Hospital">
         SELECT <include refid="Bean_Column_List"/>
         FROM hospital
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id=#{id}
-        </if>
-        <if test="hospitalName != null and hospitalName != ''">
-            AND hospital_name=#{hospitalName}
-        </if>
-        <if test="hospitalContact != null and hospitalContact != ''">
-            AND hospital_contact=#{hospitalContact}
-        </if>
-        <if test="hospitalLevel != null and hospitalLevel != ''">
-            AND hospital_level=#{hospitalLevel}
-        </if>
-        <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
-            AND hospital_branch_type=#{hospitalBranchType}
-        </if>
-        <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
-            AND hospital_introduction=#{hospitalIntroduction}
-        </if>
-        <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
-            AND hospital_parent_id=#{hospitalParentId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id=#{id}
+            </if>
+            <if test="hospitalName != null and hospitalName != ''">
+                AND hospital_name=#{hospitalName}
+            </if>
+            <if test="hospitalContact != null and hospitalContact != ''">
+                AND hospital_contact=#{hospitalContact}
+            </if>
+            <if test="hospitalLevel != null and hospitalLevel != ''">
+                AND hospital_level=#{hospitalLevel}
+            </if>
+            <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
+                AND hospital_branch_type=#{hospitalBranchType}
+            </if>
+            <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
+                AND hospital_introduction=#{hospitalIntroduction}
+            </if>
+            <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
+                AND hospital_parent_id=#{hospitalParentId}
+            </if>
+        </where>
     </select>
     <select id="countList" resultType="java.lang.Integer" parameterType="com.example.demo.entity.Department">
         SELECT count(1)
         FROM hospital
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id=#{id}
-        </if>
-        <if test="hospitalName != null and hospitalName != ''">
-            AND hospital_name=#{hospitalName}
-        </if>
-        <if test="hospitalContact != null and hospitalContact != ''">
-            AND hospital_contact=#{hospitalContact}
-        </if>
-        <if test="hospitalLevel != null and hospitalLevel != ''">
-            AND hospital_level=#{hospitalLevel}
-        </if>
-        <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
-            AND hospital_branch_type=#{hospitalBranchType}
-        </if>
-        <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
-            AND hospital_introduction=#{hospitalIntroduction}
-        </if>
-        <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
-            AND hospital_parent_id=#{hospitalParentId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id=#{id}
+            </if>
+            <if test="hospitalName != null and hospitalName != ''">
+                AND hospital_name=#{hospitalName}
+            </if>
+            <if test="hospitalContact != null and hospitalContact != ''">
+                AND hospital_contact=#{hospitalContact}
+            </if>
+            <if test="hospitalLevel != null and hospitalLevel != ''">
+                AND hospital_level=#{hospitalLevel}
+            </if>
+            <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
+                AND hospital_branch_type=#{hospitalBranchType}
+            </if>
+            <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
+                AND hospital_introduction=#{hospitalIntroduction}
+            </if>
+            <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
+                AND hospital_parent_id=#{hospitalParentId}
+            </if>
+        </where>
     </select>
     <select id="getOne" resultType="com.example.demo.entity.Hospital"
             parameterType="com.example.demo.entity.Department">
         SELECT <include refid="Bean_Column_List"/>
         FROM hospital
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id=#{id}
-        </if>
-        <if test="hospitalName != null and hospitalName != ''">
-            AND hospital_name=#{hospitalName}
-        </if>
-        <if test="hospitalContact != null and hospitalContact != ''">
-            AND hospital_contact=#{hospitalContact}
-        </if>
-        <if test="hospitalLevel != null and hospitalLevel != ''">
-            AND hospital_level=#{hospitalLevel}
-        </if>
-        <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
-            AND hospital_branch_type=#{hospitalBranchType}
-        </if>
-        <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
-            AND hospital_introduction=#{hospitalIntroduction}
-        </if>
-        <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
-            AND hospital_parent_id=#{hospitalParentId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id=#{id}
+            </if>
+            <if test="hospitalName != null and hospitalName != ''">
+                AND hospital_name=#{hospitalName}
+            </if>
+            <if test="hospitalContact != null and hospitalContact != ''">
+                AND hospital_contact=#{hospitalContact}
+            </if>
+            <if test="hospitalLevel != null and hospitalLevel != ''">
+                AND hospital_level=#{hospitalLevel}
+            </if>
+            <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
+                AND hospital_branch_type=#{hospitalBranchType}
+            </if>
+            <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
+                AND hospital_introduction=#{hospitalIntroduction}
+            </if>
+            <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
+                AND hospital_parent_id=#{hospitalParentId}
+            </if>
+        </where>
         LIMIT 1
     </select>
     <update id="update" parameterType="com.example.demo.entity.Hospital">

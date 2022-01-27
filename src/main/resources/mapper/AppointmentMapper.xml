@@ -82,109 +82,113 @@
     <select id="pageList" resultType="com.example.demo.entity.Appointment">
         SELECT <include refid="Bean_Column_List"/>
         FROM <include refid="Bean_Table_Name"/>
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id=#{id}
-        </if>
-        <if test="null != departmentId and '' != departmentId">
-            AND department_id=#{departmentId}
-        </if>
-        <if test="null != time and '' != time">
-            AND `time`=#{time}
-        </if>
-        <if test="null != userId and '' != userId">
-            AND user_id=#{userId}
-        </if>
-        <if test="null != status and '' != status">
-            AND status=#{status}
-        </if>
-        <if test="null != addTime and '' != addTime">
-            AND add_time=#{addTime}
-        </if>
-        <if test="null != doctorId and '' != doctorId">
-            AND doctor_id=#{doctorId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id=#{id}
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                AND department_id=#{departmentId}
+            </if>
+            <if test="null != time and '' != time">
+                AND `time`=#{time}
+            </if>
+            <if test="null != userId and '' != userId">
+                AND user_id=#{userId}
+            </if>
+            <if test="null != status and '' != status">
+                AND status=#{status}
+            </if>
+            <if test="null != addTime and '' != addTime">
+                AND add_time=#{addTime}
+            </if>
+            <if test="null != doctorId and '' != doctorId">
+                AND doctor_id=#{doctorId}
+            </if>
+        </where>
         LIMIT ${page}, ${limit}
     </select>
     <select id="list" resultType="com.example.demo.entity.Appointment"
             parameterType="com.example.demo.entity.Appointment">
         SELECT <include refid="Bean_Column_List"/>
         FROM <include refid="Bean_Table_Name"/>
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id=#{id}
-        </if>
-        <if test="null != departmentId and '' != departmentId">
-            AND department_id=#{departmentId}
-        </if>
-        <if test="null != time and '' != time">
-            AND `time`=#{time}
-        </if>
-        <if test="null != userId and '' != userId">
-            AND user_id=#{userId}
-        </if>
-        <if test="null != status and '' != status">
-            AND status=#{status}
-        </if>
-        <if test="null != addTime and '' != addTime">
-            AND add_time=#{addTime}
-        </if>
-        <if test="null != doctorId and '' != doctorId">
-            AND doctor_id=#{doctorId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id=#{id}
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                AND department_id=#{departmentId}
+            </if>
+            <if test="null != time and '' != time">
+                AND `time`=#{time}
+            </if>
+            <if test="null != userId and '' != userId">
+                AND user_id=#{userId}
+            </if>
+            <if test="null != status and '' != status">
+                AND status=#{status}
+            </if>
+            <if test="null != addTime and '' != addTime">
+                AND add_time=#{addTime}
+            </if>
+            <if test="null != doctorId and '' != doctorId">
+                AND doctor_id=#{doctorId}
+            </if>
+        </where>
     </select>
     <select id="countList" resultType="java.lang.Integer" parameterType="com.example.demo.entity.Appointment">
         SELECT count(1)
         FROM <include refid="Bean_Table_Name"/>
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id=#{id}
-        </if>
-        <if test="null != departmentId and '' != departmentId">
-            AND department_id=#{departmentId}
-        </if>
-        <if test="null != time and '' != time">
-            AND `time`=#{time}
-        </if>
-        <if test="null != userId and '' != userId">
-            AND user_id=#{userId}
-        </if>
-        <if test="null != status and '' != status">
-            AND status=#{status}
-        </if>
-        <if test="null != addTime and '' != addTime">
-            AND add_time=#{addTime}
-        </if>
-        <if test="null != doctorId and '' != doctorId">
-            AND doctor_id=#{doctorId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id=#{id}
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                AND department_id=#{departmentId}
+            </if>
+            <if test="null != time and '' != time">
+                AND `time`=#{time}
+            </if>
+            <if test="null != userId and '' != userId">
+                AND user_id=#{userId}
+            </if>
+            <if test="null != status and '' != status">
+                AND status=#{status}
+            </if>
+            <if test="null != addTime and '' != addTime">
+                AND add_time=#{addTime}
+            </if>
+            <if test="null != doctorId and '' != doctorId">
+                AND doctor_id=#{doctorId}
+            </if>
+        </where>
     </select>
     <select id="getOne" resultType="com.example.demo.entity.Appointment"
             parameterType="com.example.demo.entity.Appointment">
         SELECT <include refid="Bean_Column_List"/>
         FROM <include refid="Bean_Table_Name"/>
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id=#{id}
-        </if>
-        <if test="null != departmentId and '' != departmentId">
-            AND department_id=#{departmentId}
-        </if>
-        <if test="null != time and '' != time">
-            AND `time`=#{time}
-        </if>
-        <if test="null != userId and '' != userId">
-            AND user_id=#{userId}
-        </if>
-        <if test="null != status and '' != status">
-            AND status=#{status}
-        </if>
-        <if test="null != addTime and '' != addTime">
-            AND add_time=#{addTime}
-        </if>
-        <if test="null != doctorId and '' != doctorId">
-            AND doctor_id=#{doctorId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id=#{id}
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                AND department_id=#{departmentId}
+            </if>
+            <if test="null != time and '' != time">
+                AND `time`=#{time}
+            </if>
+            <if test="null != userId and '' != userId">
+                AND user_id=#{userId}
+            </if>
+            <if test="null != status and '' != status">
+                AND status=#{status}
+            </if>
+            <if test="null != addTime and '' != addTime">
+                AND add_time=#{addTime}
+            </if>
+            <if test="null != doctorId and '' != doctorId">
+                AND doctor_id=#{doctorId}
+            </if>
+        </where>
         LIMIT 1
     </select>
     <select id="validList" resultType="com.example.demo.entity.Appointment">
@@ -213,27 +217,28 @@
     </delete>
     <delete id="remove" parameterType="com.example.demo.entity.Appointment">
         DELETE FROM <include refid="Bean_Table_Name"/>
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id=#{id}
-        </if>
-        <if test="null != departmentId and '' != departmentId">
-            AND department_id=#{departmentId}
-        </if>
-        <if test="null != time and '' != time">
-            AND `time`=#{time}
-        </if>
-        <if test="null != userId and '' != userId">
-            AND user_id=#{userId}
-        </if>
-        <if test="null != status and '' != status">
-            AND status=#{status}
-        </if>
-        <if test="null != addTime and '' != addTime">
-            AND add_time=#{addTime}
-        </if>
-        <if test="null != doctorId and '' != doctorId">
-            AND doctor_id=#{doctorId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id=#{id}
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                AND department_id=#{departmentId}
+            </if>
+            <if test="null != time and '' != time">
+                AND `time`=#{time}
+            </if>
+            <if test="null != userId and '' != userId">
+                AND user_id=#{userId}
+            </if>
+            <if test="null != status and '' != status">
+                AND status=#{status}
+            </if>
+            <if test="null != addTime and '' != addTime">
+                AND add_time=#{addTime}
+            </if>
+            <if test="null != doctorId and '' != doctorId">
+                AND doctor_id=#{doctorId}
+            </if>
+        </where>
     </delete>
 </mapper>

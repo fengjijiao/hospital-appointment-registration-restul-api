@@ -98,133 +98,137 @@
     <select id="pageList" resultType="com.example.demo.entity.SchedulingStuff">
         SELECT <include refid="Base_Column_List"/>
         FROM <include refid="Base_Table_Name"/>
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id==#{id}
-        </if>
-        <if test="null != doctorId and '' != doctorId">
-            AND doctor_id=#{doctorId}
-        </if>
-        <if test="null != schedulingId and '' != schedulingId">
-            AND scheduling_id=#{schedulingId}
-        </if>
-        <if test="null != startTime and '' != startTime">
-            AND start_time=#{startTime}
-        </if>
-        <if test="null != endTime and '' != endTime">
-            AND end_time=#{endTime}
-        </if>
-        <if test="null != addTime and '' != addTime">
-            AND  add_time=#{addTime}
-        </if>
-        <if test="null != departmentId and '' != departmentId">
-            AND department_id=#{departmentId}
-        </if>
-        <if test="null != date and '' != date">
-            AND `date`=#{date}
-        </if>
-        <if test="null != schedulingStatus and '' != schedulingStatus">
-            AND scheduling_status=#{schedulingStatus}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id==#{id}
+            </if>
+            <if test="null != doctorId and '' != doctorId">
+                AND doctor_id=#{doctorId}
+            </if>
+            <if test="null != schedulingId and '' != schedulingId">
+                AND scheduling_id=#{schedulingId}
+            </if>
+            <if test="null != startTime and '' != startTime">
+                AND start_time=#{startTime}
+            </if>
+            <if test="null != endTime and '' != endTime">
+                AND end_time=#{endTime}
+            </if>
+            <if test="null != addTime and '' != addTime">
+                AND  add_time=#{addTime}
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                AND department_id=#{departmentId}
+            </if>
+            <if test="null != date and '' != date">
+                AND `date`=#{date}
+            </if>
+            <if test="null != schedulingStatus and '' != schedulingStatus">
+                AND scheduling_status=#{schedulingStatus}
+            </if>
+        </where>
         LIMIT ${page}, ${limit}
     </select>
     <select id="list" resultType="com.example.demo.entity.SchedulingStuff"
             parameterType="com.example.demo.entity.SchedulingStuff">
         SELECT <include refid="Base_Column_List"/>
         FROM <include refid="Base_Table_Name"/>
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id==#{id}
-        </if>
-        <if test="null != doctorId and '' != doctorId">
-            AND doctor_id=#{doctorId}
-        </if>
-        <if test="null != schedulingId and '' != schedulingId">
-            AND scheduling_id=#{schedulingId}
-        </if>
-        <if test="null != startTime and '' != startTime">
-            AND start_time=#{startTime}
-        </if>
-        <if test="null != endTime and '' != endTime">
-            AND end_time=#{endTime}
-        </if>
-        <if test="null != addTime and '' != addTime">
-            AND  add_time=#{addTime}
-        </if>
-        <if test="null != departmentId and '' != departmentId">
-            AND department_id=#{departmentId}
-        </if>
-        <if test="null != date and '' != date">
-            AND `date`=#{date}
-        </if>
-        <if test="null != schedulingStatus and '' != schedulingStatus">
-            AND scheduling_status=#{schedulingStatus}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id==#{id}
+            </if>
+            <if test="null != doctorId and '' != doctorId">
+                AND doctor_id=#{doctorId}
+            </if>
+            <if test="null != schedulingId and '' != schedulingId">
+                AND scheduling_id=#{schedulingId}
+            </if>
+            <if test="null != startTime and '' != startTime">
+                AND start_time=#{startTime}
+            </if>
+            <if test="null != endTime and '' != endTime">
+                AND end_time=#{endTime}
+            </if>
+            <if test="null != addTime and '' != addTime">
+                AND  add_time=#{addTime}
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                AND department_id=#{departmentId}
+            </if>
+            <if test="null != date and '' != date">
+                AND `date`=#{date}
+            </if>
+            <if test="null != schedulingStatus and '' != schedulingStatus">
+                AND scheduling_status=#{schedulingStatus}
+            </if>
+        </where>
     </select>
     <select id="countList" resultType="java.lang.Integer" parameterType="com.example.demo.entity.SchedulingStuff">
         SELECT count(1)
         FROM <include refid="Base_Table_Name"/>
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id==#{id}
-        </if>
-        <if test="null != doctorId and '' != doctorId">
-            AND doctor_id=#{doctorId}
-        </if>
-        <if test="null != schedulingId and '' != schedulingId">
-            AND scheduling_id=#{schedulingId}
-        </if>
-        <if test="null != startTime and '' != startTime">
-            AND start_time=#{startTime}
-        </if>
-        <if test="null != endTime and '' != endTime">
-            AND end_time=#{endTime}
-        </if>
-        <if test="null != addTime and '' != addTime">
-            AND  add_time=#{addTime}
-        </if>
-        <if test="null != departmentId and '' != departmentId">
-            AND department_id=#{departmentId}
-        </if>
-        <if test="null != date and '' != date">
-            AND `date`=#{date}
-        </if>
-        <if test="null != schedulingStatus and '' != schedulingStatus">
-            AND scheduling_status=#{schedulingStatus}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id==#{id}
+            </if>
+            <if test="null != doctorId and '' != doctorId">
+                AND doctor_id=#{doctorId}
+            </if>
+            <if test="null != schedulingId and '' != schedulingId">
+                AND scheduling_id=#{schedulingId}
+            </if>
+            <if test="null != startTime and '' != startTime">
+                AND start_time=#{startTime}
+            </if>
+            <if test="null != endTime and '' != endTime">
+                AND end_time=#{endTime}
+            </if>
+            <if test="null != addTime and '' != addTime">
+                AND  add_time=#{addTime}
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                AND department_id=#{departmentId}
+            </if>
+            <if test="null != date and '' != date">
+                AND `date`=#{date}
+            </if>
+            <if test="null != schedulingStatus and '' != schedulingStatus">
+                AND scheduling_status=#{schedulingStatus}
+            </if>
+        </where>
     </select>
     <select id="getOne" resultType="com.example.demo.entity.SchedulingStuff"
             parameterType="com.example.demo.entity.SchedulingStuff">
         SELECT <include refid="Base_Column_List"/>
         FROM <include refid="Base_Table_Name"/>
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id==#{id}
-        </if>
-        <if test="null != doctorId and '' != doctorId">
-            AND doctor_id=#{doctorId}
-        </if>
-        <if test="null != schedulingId and '' != schedulingId">
-            AND scheduling_id=#{schedulingId}
-        </if>
-        <if test="null != startTime and '' != startTime">
-            AND start_time=#{startTime}
-        </if>
-        <if test="null != endTime and '' != endTime">
-            AND end_time=#{endTime}
-        </if>
-        <if test="null != addTime and '' != addTime">
-            AND  add_time=#{addTime}
-        </if>
-        <if test="null != departmentId and '' != departmentId">
-            AND department_id=#{departmentId}
-        </if>
-        <if test="null != date and '' != date">
-            AND `date`=#{date}
-        </if>
-        <if test="null != schedulingStatus and '' != schedulingStatus">
-            AND scheduling_status=#{schedulingStatus}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id==#{id}
+            </if>
+            <if test="null != doctorId and '' != doctorId">
+                AND doctor_id=#{doctorId}
+            </if>
+            <if test="null != schedulingId and '' != schedulingId">
+                AND scheduling_id=#{schedulingId}
+            </if>
+            <if test="null != startTime and '' != startTime">
+                AND start_time=#{startTime}
+            </if>
+            <if test="null != endTime and '' != endTime">
+                AND end_time=#{endTime}
+            </if>
+            <if test="null != addTime and '' != addTime">
+                AND  add_time=#{addTime}
+            </if>
+            <if test="null != departmentId and '' != departmentId">
+                AND department_id=#{departmentId}
+            </if>
+            <if test="null != date and '' != date">
+                AND `date`=#{date}
+            </if>
+            <if test="null != schedulingStatus and '' != schedulingStatus">
+                AND scheduling_status=#{schedulingStatus}
+            </if>
+        </where>
         LIMIT 1
     </select>
     <select id="validList" resultType="com.example.demo.entity.SchedulingStuff">

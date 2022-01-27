@@ -71,97 +71,101 @@
     <select id="pageList" resultType="Doctor">
         SELECT <include refid="Bean_Column_List"/>
         FROM doctor
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id = #{id}
-        </if>
-        <if test="doctorName != null and doctorName != ''">
-            AND doctor_name = #{doctorName}
-        </if>
-        <if test="doctorSex != null and doctorSex != ''">
-            AND doctor_sex = #{doctorSex}
-        </if>
-        <if test="departmentId != null and departmentId != ''">
-            AND department_id = #{departmentId}
-        </if>
-        <if test="doctorJobTitle != null and doctorJobTitle != ''">
-            AND doctor_job_title = #{doctorJobTitle}
-        </if>
-        <if test="doctorStatus != null and doctorStatus != ''">
-            AND doctor_status = #{doctorStatus}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id = #{id}
+            </if>
+            <if test="doctorName != null and doctorName != ''">
+                AND doctor_name = #{doctorName}
+            </if>
+            <if test="doctorSex != null and doctorSex != ''">
+                AND doctor_sex = #{doctorSex}
+            </if>
+            <if test="departmentId != null and departmentId != ''">
+                AND department_id = #{departmentId}
+            </if>
+            <if test="doctorJobTitle != null and doctorJobTitle != ''">
+                AND doctor_job_title = #{doctorJobTitle}
+            </if>
+            <if test="doctorStatus != null and doctorStatus != ''">
+                AND doctor_status = #{doctorStatus}
+            </if>
+        </where>
         LIMIT ${page}, ${limit}
     </select>
     <select id="list" resultType="Doctor"
             parameterType="Doctor">
         SELECT <include refid="Bean_Column_List"/>
         FROM doctor
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id = #{id}
-        </if>
-        <if test="doctorName != null and doctorName != ''">
-            AND doctor_name = #{doctorName}
-        </if>
-        <if test="doctorSex != null and doctorSex != ''">
-            AND doctor_sex = #{doctorSex}
-        </if>
-        <if test="departmentId != null and departmentId != ''">
-            AND department_id = #{departmentId}
-        </if>
-        <if test="doctorJobTitle != null and doctorJobTitle != ''">
-            AND doctor_job_title = #{doctorJobTitle}
-        </if>
-        <if test="doctorStatus != null and doctorStatus != ''">
-            AND doctor_status = #{doctorStatus}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id = #{id}
+            </if>
+            <if test="doctorName != null and doctorName != ''">
+                AND doctor_name = #{doctorName}
+            </if>
+            <if test="doctorSex != null and doctorSex != ''">
+                AND doctor_sex = #{doctorSex}
+            </if>
+            <if test="departmentId != null and departmentId != ''">
+                AND department_id = #{departmentId}
+            </if>
+            <if test="doctorJobTitle != null and doctorJobTitle != ''">
+                AND doctor_job_title = #{doctorJobTitle}
+            </if>
+            <if test="doctorStatus != null and doctorStatus != ''">
+                AND doctor_status = #{doctorStatus}
+            </if>
+        </where>
     </select>
     <select id="countList" resultType="java.lang.Integer" parameterType="Doctor">
         SELECT count(1)
         FROM doctor
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id = #{id}
-        </if>
-        <if test="doctorName != null and doctorName != ''">
-            AND doctor_name = #{doctorName}
-        </if>
-        <if test="doctorSex != null and doctorSex != ''">
-            AND doctor_sex = #{doctorSex}
-        </if>
-        <if test="departmentId != null and departmentId != ''">
-            AND department_id = #{departmentId}
-        </if>
-        <if test="doctorJobTitle != null and doctorJobTitle != ''">
-            AND doctor_job_title = #{doctorJobTitle}
-        </if>
-        <if test="doctorStatus != null and doctorStatus != ''">
-            AND doctor_status = #{doctorStatus}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id = #{id}
+            </if>
+            <if test="doctorName != null and doctorName != ''">
+                AND doctor_name = #{doctorName}
+            </if>
+            <if test="doctorSex != null and doctorSex != ''">
+                AND doctor_sex = #{doctorSex}
+            </if>
+            <if test="departmentId != null and departmentId != ''">
+                AND department_id = #{departmentId}
+            </if>
+            <if test="doctorJobTitle != null and doctorJobTitle != ''">
+                AND doctor_job_title = #{doctorJobTitle}
+            </if>
+            <if test="doctorStatus != null and doctorStatus != ''">
+                AND doctor_status = #{doctorStatus}
+            </if>
+        </where>
     </select>
     <select id="getOne" resultType="Doctor"
             parameterType="Doctor">
         SELECT <include refid="Bean_Column_List"/>
         FROM doctor
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id = #{id}
-        </if>
-        <if test="doctorName != null and doctorName != ''">
-            AND doctor_name = #{doctorName}
-        </if>
-        <if test="doctorSex != null and doctorSex != ''">
-            AND doctor_sex = #{doctorSex}
-        </if>
-        <if test="departmentId != null and departmentId != ''">
-            AND department_id = #{departmentId}
-        </if>
-        <if test="doctorJobTitle != null and doctorJobTitle != ''">
-            AND doctor_job_title = #{doctorJobTitle}
-        </if>
-        <if test="doctorStatus != null and doctorStatus != ''">
-            AND doctor_status = #{doctorStatus}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id = #{id}
+            </if>
+            <if test="doctorName != null and doctorName != ''">
+                AND doctor_name = #{doctorName}
+            </if>
+            <if test="doctorSex != null and doctorSex != ''">
+                AND doctor_sex = #{doctorSex}
+            </if>
+            <if test="departmentId != null and departmentId != ''">
+                AND department_id = #{departmentId}
+            </if>
+            <if test="doctorJobTitle != null and doctorJobTitle != ''">
+                AND doctor_job_title = #{doctorJobTitle}
+            </if>
+            <if test="doctorStatus != null and doctorStatus != ''">
+                AND doctor_status = #{doctorStatus}
+            </if>
+        </where>
         LIMIT 1
     </select>
     <update id="update" parameterType="Doctor">

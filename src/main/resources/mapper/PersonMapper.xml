@@ -79,109 +79,113 @@
     <select id="pageList" resultType="com.example.demo.entity.Person">
         SELECT <include refid="Bean_Column_List"/>
         FROM person
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id = #{id}
-        </if>
-        <if test="userName != null and userName != ''">
-            AND user_name = #{userName}
-        </if>
-        <if test="userAge != null and userAge != ''">
-            AND user_age = #{userAge}
-        </if>
-        <if test="mobile != null and mobile != ''">
-            AND mobile = #{mobile}
-        </if>
-        <if test="sex != null and sex != ''">
-            AND sex = #{sex}
-        </if>
-        <if test="idCardNo != null and idCardNo != ''">
-            AND id_card_no = #{idCardNo}
-        </if>
-        <if test="openId != null and openId != ''">
-            AND open_id = #{openId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id = #{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name = #{userName}
+            </if>
+            <if test="userAge != null and userAge != ''">
+                AND user_age = #{userAge}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile = #{mobile}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+            <if test="idCardNo != null and idCardNo != ''">
+                AND id_card_no = #{idCardNo}
+            </if>
+            <if test="openId != null and openId != ''">
+                AND open_id = #{openId}
+            </if>
+        </where>
         LIMIT ${page}, ${limit}
     </select>
     <select id="list" resultType="com.example.demo.entity.Person"
             parameterType="com.example.demo.entity.Person">
         SELECT <include refid="Bean_Column_List"/>
         FROM person
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id = #{id}
-        </if>
-        <if test="userName != null and userName != ''">
-            AND user_name = #{userName}
-        </if>
-        <if test="userAge != null and userAge != ''">
-            AND user_age = #{userAge}
-        </if>
-        <if test="mobile != null and mobile != ''">
-            AND mobile = #{mobile}
-        </if>
-        <if test="sex != null and sex != ''">
-            AND sex = #{sex}
-        </if>
-        <if test="idCardNo != null and idCardNo != ''">
-            AND id_card_no = #{idCardNo}
-        </if>
-        <if test="openId != null and openId != ''">
-            AND open_id = #{openId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id = #{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name = #{userName}
+            </if>
+            <if test="userAge != null and userAge != ''">
+                AND user_age = #{userAge}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile = #{mobile}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+            <if test="idCardNo != null and idCardNo != ''">
+                AND id_card_no = #{idCardNo}
+            </if>
+            <if test="openId != null and openId != ''">
+                AND open_id = #{openId}
+            </if>
+        </where>
     </select>
     <select id="countList" resultType="java.lang.Integer" parameterType="com.example.demo.entity.Person">
         SELECT count(1)
         FROM person
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id = #{id}
-        </if>
-        <if test="userName != null and userName != ''">
-            AND user_name = #{userName}
-        </if>
-        <if test="userAge != null and userAge != ''">
-            AND user_age = #{userAge}
-        </if>
-        <if test="mobile != null and mobile != ''">
-            AND mobile = #{mobile}
-        </if>
-        <if test="sex != null and sex != ''">
-            AND sex = #{sex}
-        </if>
-        <if test="idCardNo != null and idCardNo != ''">
-            AND id_card_no = #{idCardNo}
-        </if>
-        <if test="openId != null and openId != ''">
-            AND open_id = #{openId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id = #{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name = #{userName}
+            </if>
+            <if test="userAge != null and userAge != ''">
+                AND user_age = #{userAge}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile = #{mobile}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+            <if test="idCardNo != null and idCardNo != ''">
+                AND id_card_no = #{idCardNo}
+            </if>
+            <if test="openId != null and openId != ''">
+                AND open_id = #{openId}
+            </if>
+        </where>
     </select>
     <select id="getOne" resultType="com.example.demo.entity.Person"
             parameterType="com.example.demo.entity.Person">
         SELECT <include refid="Bean_Column_List"/>
         FROM person
-        WHERE 1=1
-        <if test="null != id and '' != id">
-            AND id = #{id}
-        </if>
-        <if test="userName != null and userName != ''">
-            AND user_name = #{userName}
-        </if>
-        <if test="userAge != null and userAge != ''">
-            AND user_age = #{userAge}
-        </if>
-        <if test="mobile != null and mobile != ''">
-            AND mobile = #{mobile}
-        </if>
-        <if test="sex != null and sex != ''">
-            AND sex = #{sex}
-        </if>
-        <if test="idCardNo != null and idCardNo != ''">
-            AND id_card_no = #{idCardNo}
-        </if>
-        <if test="openId != null and openId != ''">
-            AND open_id = #{openId}
-        </if>
+        <where>
+            <if test="null != id and '' != id">
+                AND id = #{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name = #{userName}
+            </if>
+            <if test="userAge != null and userAge != ''">
+                AND user_age = #{userAge}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile = #{mobile}
+            </if>
+            <if test="sex != null and sex != ''">
+                AND sex = #{sex}
+            </if>
+            <if test="idCardNo != null and idCardNo != ''">
+                AND id_card_no = #{idCardNo}
+            </if>
+            <if test="openId != null and openId != ''">
+                AND open_id = #{openId}
+            </if>
+        </where>
         LIMIT 1
     </select>
     <update id="update" parameterType="com.example.demo.entity.Person">
