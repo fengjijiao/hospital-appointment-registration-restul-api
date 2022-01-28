@@ -35,4 +35,19 @@ public class DateUtils {
     public static LocalDate convertToLocalDateViaInstant(Date date) {
         return date.toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDate();
     }
+
+    public static LocalDateTime convertToLocalDateTimeViaDateStr(String dateStr) {
+        return LocalDate.parse(dateStr, dtf).atStartOfDay(ZoneId.of("Asia/Shanghai")).toLocalDateTime();
+    }
+
+    public static boolean isDateInRange(String dateStr, Long maxInterval) {
+        LocalDateTime ldt_ = DateUtils.convertToLocalDateTimeViaDateStr(dateStr);
+        LocalDateTime ldt7 = LocalDateTime.now().plusDays(maxInterval);
+        LocalDateTime ldt = LocalDateTime.now()
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0)
+                .withNano(0);
+        return (ldt_.isAfter(ldt7) || ldt_.isBefore(ldt));
+    }
 }

@@ -36,12 +36,11 @@ public class HospitalController {
         return R.ok().put(hospitalList.size(), hospitalList);
     }
 
-    @ApiOperation(value = "获取医院信息（limit分页）")
-    @GetMapping("/pageListByLimit")
+    @ApiOperation(value = "获取医院信息（通过limit分页）")
+    @GetMapping("/pageListByHandWritingLimitStatement")
     @ResponseBody
-    public R pageListByLimit(Hospital hospitalQO, PageQO pageQO) {
-        PageVO<Hospital> pageVO = hospitalService.pageList(hospitalQO, pageQO);
-        return R.ok().put("result", pageVO);
+    public R pageListByHandWritingLimitStatement(Hospital hospitalQO, PageQO pageQO) {
+        return R.ok().put("result", hospitalService.pageList(hospitalQO, pageQO));
     }
 
     @ApiOperation(value = "获取特定医院信息", notes = "通过医院ID")

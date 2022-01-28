@@ -188,6 +188,33 @@
         </where>
         LIMIT 1
     </select>
+    <select id="pageListByRowBounds" resultType="com.example.demo.entity.Person">
+        SELECT <include refid="Bean_Column_List"/>
+        FROM person
+        <where>
+            <if test="null != id">
+                AND id = #{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name = #{userName}
+            </if>
+            <if test="userAge != null">
+                AND user_age = #{userAge}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                AND mobile = #{mobile}
+            </if>
+            <if test="sex != null">
+                AND sex = #{sex}
+            </if>
+            <if test="idCardNo != null and idCardNo != ''">
+                AND id_card_no = #{idCardNo}
+            </if>
+            <if test="openId != null and openId != ''">
+                AND open_id = #{openId}
+            </if>
+        </where>
+    </select>
     <update id="update" parameterType="com.example.demo.entity.Person">
         UPDATE person
         <set>

@@ -2,10 +2,14 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Doctor;
 import com.example.demo.mapper.DoctorMapper;
+import com.example.demo.o.vo.PageVO;
 import com.example.demo.service.DoctorService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
 
 @Service("doctorServiceImpl")
@@ -31,6 +35,13 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public List<Doctor> pageList(Doctor queryParamDTO, int page, int limit) {
         return doctorMapper.pageList(queryParamDTO, page, limit);
+    }
+
+    @Override
+    public PageVO<Doctor> pageListByPageHelper(Doctor queryParamDTO, int pageSize, int pageNum) {
+        Page<Doctor> page = PageHelper.startPage(pageNum, pageSize);
+        List<Doctor> doctorList = doctorMapper.list(queryParamDTO);
+        return new PageVO<>(pageSize, pageNum, (int) page.getTotal(), doctorList);
     }
 
     @Override

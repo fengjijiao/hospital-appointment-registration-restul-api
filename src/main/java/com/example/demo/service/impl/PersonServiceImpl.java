@@ -2,7 +2,9 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.Person;
 import com.example.demo.mapper.PersonMapper;
+import com.example.demo.o.vo.PageVO;
 import com.example.demo.service.PersonService;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,13 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<Person> pageList(Person queryParamDTO, int page, int limit) {
         return personMapper.pageList(queryParamDTO, page, limit);
+    }
+
+    @Override
+    public PageVO<Person> pageListByRowBounds(Person queryParamDTO, int pageSize, int pageNum) {
+        int total = personMapper.countList(queryParamDTO);
+        List<Person> personList = personMapper.pageListByRowBounds(queryParamDTO, new RowBounds((pageNum - 1) * pageSize, pageSize));
+        return new PageVO<>(pageSize, pageNum, total, personList);
     }
 
     @Override

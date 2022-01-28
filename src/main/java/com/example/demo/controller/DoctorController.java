@@ -38,6 +38,20 @@ public class DoctorController {
         return R.ok().put("result", doctorService.getById(doctorId));
     }
 
+    @ApiOperation(value = "获取医生信息（通过PageHelper分页）")
+    @GetMapping("/pageListByPageHelper")
+    @ResponseBody
+    public R pageListByPageHelper(
+            Doctor doctorQO,
+            @ApiParam(name = "pageSize", value = "页大小", required = true, defaultValue = "3")
+            @RequestParam(name = "pageSize")
+                    Integer pageSize,
+            @ApiParam(name = "pageNum", value = "页码", required = true, defaultValue = "1")
+            @RequestParam(name = "pageNum")
+                    Integer pageNum) {
+        return R.ok().put("result", doctorService.pageListByPageHelper(doctorQO, pageSize, pageNum));
+    }
+
     @ApiOperation(value = "获取特定科室的所有医生信息", notes = "通过科室ID")
     @GetMapping("/listByDepartmentId")
     @ResponseBody

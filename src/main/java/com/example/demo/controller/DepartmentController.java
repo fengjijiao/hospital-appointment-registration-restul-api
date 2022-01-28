@@ -2,6 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.common.vo.R;
 import com.example.demo.entity.Department;
+import com.example.demo.o.vo.DepartmentItemVO;
+import com.example.demo.o.vo.DepartmentTreeVO;
+import com.example.demo.o.vo.ResultT;
 import com.example.demo.service.DepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = "科室相关接口")
@@ -22,6 +26,38 @@ public class DepartmentController {
 
     @Autowired
     private DepartmentService departmentService;
+
+    /**
+     * 获取科室信息（tree）
+     *
+     * @param hospitalId 医院ID
+     * @return
+     */
+    @ApiOperation(value = "获取科室信息（tree）", notes = "通过医院ID")
+    @GetMapping("/list")
+    @ResponseBody
+    public R list(
+            @ApiParam(name = "id", value = "医院ID", required = true, defaultValue = "2")
+            @RequestParam(name = "id")
+                    Long hospitalId
+    ) {
+        Department queryParamDTO = new Department();
+        queryParamDTO.setHospitalId(hospitalId);
+        queryParamDTO.setParentId(0L);
+        List<DepartmentItemVO> departmentItemVOList = new ArrayList<>();
+        List<Department> fcDepartmentList = departmentService.list(queryParamDTO);
+        fcDepartmentList.forEach(department -> {
+            Department queryParamDTO1 = new Department();
+            queryParamDTO1.setParentId(department.getId());
+            List<Department> scDepartmentList = departmentService.list(queryParamDTO1);
+            ResultT<List<Department>> resultT0 = new ResultT<>(scDepartmentList);
+            DepartmentItemVO departmentItemVO = new DepartmentItemVO(resultT0);
+            departmentItemVO.updateDepartmentInfo(department);
+            departmentItemVOList.add(departmentItemVO);
+        });
+        DepartmentTreeVO departmentTreeVO = new DepartmentTreeVO(departmentItemVOList);
+        return R.ok().put("result", departmentTreeVO);
+    }
 
     /**
      * 获取一级科室信息

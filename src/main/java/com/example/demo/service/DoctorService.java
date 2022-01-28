@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Doctor;
+import com.example.demo.o.vo.PageVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public interface DoctorService {
     boolean update(Doctor queryParamDTO);
 
     List<Doctor> pageList(Doctor queryParamDTO, int page, int limit);
+
+    PageVO<Doctor> pageListByPageHelper(Doctor queryParamDTO, int pageSize, int pageNum);
 
     List<Doctor> list(Doctor queryParamDTO);
 

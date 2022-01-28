@@ -9,6 +9,7 @@ import com.example.demo.entity.Appointment;
 import com.example.demo.entity.Doctor;
 import com.example.demo.service.AppointmentService;
 import com.example.demo.service.DoctorService;
+import com.example.demo.utils.DateUtils;
 import com.example.demo.utils.TimeUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
@@ -141,5 +141,36 @@ public class AppointmentController {
         } else {
             return R.ok().put("result", false);
         }
+    }
+
+    /**
+     * 获取可预约的医生列表
+     * @param dateStr 日期字符串'yyyy-MM-dd'
+     * @param departmentId 部门ID
+     * @return
+     */
+    @ApiOperation(value = "获取可预约的医生列表", notes = "通过日期和科室ID")
+    @GetMapping("/listAllowed")
+    @ResponseBody
+    public R listAllowed(
+            @ApiParam(name = "date", value = "日期", required = true, defaultValue = "2022-01-29")
+            @RequestParam(name = "date")
+                    String dateStr,
+            @ApiParam(name = "id", value = "科室ID", required = true, defaultValue = "2")
+            @RequestParam(name = "id")
+                    Long departmentId) {
+        if (DateUtils.isDateInRange(dateStr, 7L)) {
+            return R.error(40003, "超出预约范围！");
+        }
+        Doctor doctorDTO = new Doctor();
+        doctorDTO.setDepartmentId(departmentId);
+        List<Doctor> doctorList = doctorService.list(doctorDTO);
+        List<Long> availableList = new ArrayList<>();
+        doctorList.forEach(doctor -> {
+            if (AppointmentCache.mapDoctorAllNS(doctor.getId()).containsKey(dateStr)) {
+                availableList.add(doctor.getId());
+            }
+        });
+        return R.ok().put("result", availableList);
     }
 }

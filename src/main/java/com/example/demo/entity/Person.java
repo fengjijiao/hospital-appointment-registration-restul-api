@@ -15,39 +15,39 @@ public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * uid
+     * 用户ID
      */
-    @ApiModelProperty("uid")
+    @ApiModelProperty("用户ID")
     private Long id;
 
     /**
-     * username
+     * 用户名
      */
-    @ApiModelProperty("user_name")
+    @ApiModelProperty("用户名")
     private String userName;
 
     /**
-     * user_age
+     * 年龄
      */
-    @ApiModelProperty("user_age")
+    @ApiModelProperty("年龄")
     private Integer userAge;
 
     /**
-     * mobile
+     * 手机号
      */
-    @ApiModelProperty("mobile")
+    @ApiModelProperty("手机号")
     private String mobile;
 
     /**
-     * sex
+     * 性别
      */
-    @ApiModelProperty("sex")
+    @ApiModelProperty("性别")
     private String sex;
 
     /**
-     * id_card_no
+     * 卡号
      */
-    @ApiModelProperty("id_card_no")
+    @ApiModelProperty("卡号")
     private String idCardNo;
 
     /**

@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Person;
+import com.example.demo.o.vo.PageVO;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +18,8 @@ public interface PersonService {
     boolean update(Person queryParamDTO);
 
     List<Person> pageList(Person queryParamDTO, int page, int limit);
+
+    PageVO<Person> pageListByRowBounds(Person queryParamDTO, int pageSize, int pageNum);
 
     List<Person> list(Person queryParamDTO);
 

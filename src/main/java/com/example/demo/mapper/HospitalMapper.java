@@ -18,7 +18,7 @@ public interface HospitalMapper {
 
     boolean update(Hospital queryParamDTO);
 
-    List<Hospital> pageList(@Param("q") Hospital queryParamDTO, @Param("p") PageQO pageQO);
+    List<Hospital> pageList(@Param("q") Hospital queryParamDTO, @Param("p") PageQO pageQO);//通过手写limit语句进行分页
 
     List<Hospital> list(Hospital queryParamDTO);
 

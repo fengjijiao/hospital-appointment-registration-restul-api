@@ -75,16 +75,16 @@
         SELECT <include refid="Bean_Column_List"/>
         FROM department
         <where>
-            <if test="null != id and '' != id">
+            <if test="null != id">
                 AND id = #{id}
             </if>
-            <if test="hospitalId != null and hospitalId != ''">
+            <if test="hospitalId != null">
                 AND hospital_id = #{hospitalId}
             </if>
             <if test="departmentName != null and departmentName != ''">
                 AND department_name = #{departmentName}
             </if>
-            <if test="parentId != null and parentId != ''">
+            <if test="parentId != null">
                 AND parent_id = #{parentId}
             </if>
         </where>
