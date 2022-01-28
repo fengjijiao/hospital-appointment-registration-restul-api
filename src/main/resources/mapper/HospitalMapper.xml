@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.mapper.HospitalMapper">
-    <resultMap id="BeanResultMap" type="com.example.demo.entity.Hospital">
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.Hospital">
         <result column="id" property="id"/>
         <result column="hospital_name" property="hospitalName"/>
         <result column="hospital_contact" property="hospitalContact"/>
@@ -12,7 +12,7 @@
         <result column="hospital_introduction" property="hospitalIntroduction"/>
         <result column="hospital_parent_id" property="hospitalParentId"/>
     </resultMap>
-    <sql id="Bean_Column_List">
+    <sql id="Base_Column_List">
         id,
         hospital_name,
         hospital_contact,
@@ -71,41 +71,41 @@
         </trim>
     </insert>
     <select id="getById" resultType="com.example.demo.entity.Hospital">
-        SELECT <include refid="Bean_Column_List"/>
+        SELECT <include refid="Base_Column_List"/>
         FROM hospital
         WHERE id = #{id};
     </select>
     <select id="pageList" resultType="com.example.demo.entity.Hospital">
-        SELECT <include refid="Bean_Column_List"/>
+        SELECT <include refid="Base_Column_List"/>
         FROM hospital
         <where>
-            <if test="null != id and '' != id">
-                AND id=#{id}
+            <if test="null != q.id">
+                AND id=#{q.id}
             </if>
-            <if test="hospitalName != null and hospitalName != ''">
-                AND hospital_name=#{hospitalName}
+            <if test="q.hospitalName != null and q.hospitalName != ''">
+                AND hospital_name=#{q.hospitalName}
             </if>
-            <if test="hospitalContact != null and hospitalContact != ''">
-                AND hospital_contact=#{hospitalContact}
+            <if test="q.hospitalContact != null and q.hospitalContact != ''">
+                AND hospital_contact=#{q.hospitalContact}
             </if>
-            <if test="hospitalLevel != null and hospitalLevel != ''">
-                AND hospital_level=#{hospitalLevel}
+            <if test="q.hospitalLevel != null">
+                AND hospital_level=#{q.hospitalLevel}
             </if>
-            <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
+            <if test="q.hospitalBranchType != null">
                 AND hospital_branch_type=#{hospitalBranchType}
             </if>
-            <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
-                AND hospital_introduction=#{hospitalIntroduction}
+            <if test="q.hospitalIntroduction != null and q.hospitalIntroduction != ''">
+                AND hospital_introduction=#{q.hospitalIntroduction}
             </if>
-            <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
-                AND hospital_parent_id=#{hospitalParentId}
+            <if test="q.hospitalParentId != null">
+                AND hospital_parent_id=#{q.hospitalParentId}
             </if>
         </where>
-        LIMIT ${page}, ${limit}
+        LIMIT #{p.offset}, #{p.pageSize}
     </select>
     <select id="list" resultType="com.example.demo.entity.Hospital"
             parameterType="com.example.demo.entity.Hospital">
-        SELECT <include refid="Bean_Column_List"/>
+        SELECT <include refid="Base_Column_List"/>
         FROM hospital
         <where>
             <if test="null != id and '' != id">
@@ -120,13 +120,13 @@
             <if test="hospitalLevel != null and hospitalLevel != ''">
                 AND hospital_level=#{hospitalLevel}
             </if>
-            <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
+            <if test="hospitalBranchType != null and hospitalBranchType != ''">
                 AND hospital_branch_type=#{hospitalBranchType}
             </if>
             <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
                 AND hospital_introduction=#{hospitalIntroduction}
             </if>
-            <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
+            <if test="hospitalParentId != null and hospitalParentId != ''">
                 AND hospital_parent_id=#{hospitalParentId}
             </if>
         </where>
@@ -147,20 +147,20 @@
             <if test="hospitalLevel != null and hospitalLevel != ''">
                 AND hospital_level=#{hospitalLevel}
             </if>
-            <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
+            <if test="hospitalBranchType != null and hospitalBranchType != ''">
                 AND hospital_branch_type=#{hospitalBranchType}
             </if>
             <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
                 AND hospital_introduction=#{hospitalIntroduction}
             </if>
-            <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
+            <if test="hospitalParentId != null and hospitalParentId != ''">
                 AND hospital_parent_id=#{hospitalParentId}
             </if>
         </where>
     </select>
     <select id="getOne" resultType="com.example.demo.entity.Hospital"
             parameterType="com.example.demo.entity.Department">
-        SELECT <include refid="Bean_Column_List"/>
+        SELECT <include refid="Base_Column_List"/>
         FROM hospital
         <where>
             <if test="null != id and '' != id">
@@ -175,13 +175,13 @@
             <if test="hospitalLevel != null and hospitalLevel != ''">
                 AND hospital_level=#{hospitalLevel}
             </if>
-            <if test="hospitalBranchType != null and hospitalBranchType != '' and hospitalBranchType > 0">
+            <if test="hospitalBranchType != null and hospitalBranchType != ''">
                 AND hospital_branch_type=#{hospitalBranchType}
             </if>
             <if test="hospitalIntroduction != null and hospitalIntroduction != ''">
                 AND hospital_introduction=#{hospitalIntroduction}
             </if>
-            <if test="hospitalParentId != null and hospitalParentId != '' and hospitalParentId > 0">
+            <if test="hospitalParentId != null and hospitalParentId != ''">
                 AND hospital_parent_id=#{hospitalParentId}
             </if>
         </where>

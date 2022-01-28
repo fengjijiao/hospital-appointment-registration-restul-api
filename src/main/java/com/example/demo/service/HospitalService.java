@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Hospital;
+import com.example.demo.o.qo.PageQO;
+import com.example.demo.o.vo.PageVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +16,7 @@ public interface HospitalService {
 
     boolean update(Hospital queryParamDTO);
 
-    List<Hospital> pageList(Hospital queryParamDTO, int page, int limit);
+    PageVO<Hospital> pageList(Hospital queryParamDTO, PageQO pageQO);
 
     List<Hospital> list(Hospital queryParamDTO);
 

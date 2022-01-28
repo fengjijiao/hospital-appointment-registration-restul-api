@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -15,15 +16,15 @@ public class Hospital implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * hid
+     * 医院ID
      */
-    @ApiModelProperty("hid")
+    @ApiModelProperty("医院ID")
     private Integer id;
 
     /**
-     * hospital_name
+     * 医院名称
      */
-    @ApiModelProperty("hospital_name")
+    @ApiModelProperty("医院名称")
     private String hospitalName;
 
     /**
@@ -33,9 +34,9 @@ public class Hospital implements Serializable {
     private String hospitalContact;
 
     /**
-     * hospital_level
+     * 医院等级
      */
-    @ApiModelProperty("hospital_level")
+    @ApiModelProperty("医院等级")
     private String hospitalLevel;
 
     /**
@@ -45,9 +46,9 @@ public class Hospital implements Serializable {
     private Integer hospitalBranchType;
 
     /**
-     * hospital_introduction
+     * 医院介绍
      */
-    @ApiModelProperty("hospital_introduction")
+    @ApiModelProperty("医院介绍")
     private String hospitalIntroduction;
 
     /**

@@ -1,7 +1,11 @@
 package com.example.demo.mapper;
 
 import com.example.demo.entity.Hospital;
+import com.example.demo.o.qo.PageQO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,7 +18,7 @@ public interface HospitalMapper {
 
     boolean update(Hospital queryParamDTO);
 
-    List<Hospital> pageList(Hospital queryParamDTO, int page, int limit);
+    List<Hospital> pageList(@Param("q") Hospital queryParamDTO, @Param("p") PageQO pageQO);
 
     List<Hospital> list(Hospital queryParamDTO);
 

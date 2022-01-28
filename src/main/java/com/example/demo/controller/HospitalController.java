@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.common.vo.R;
 import com.example.demo.entity.Hospital;
+import com.example.demo.o.qo.PageQO;
+import com.example.demo.o.vo.PageVO;
 import com.example.demo.service.HospitalService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +34,14 @@ public class HospitalController {
     public R list() {
         List<Hospital> hospitalList = hospitalService.list(new Hospital());
         return R.ok().put(hospitalList.size(), hospitalList);
+    }
+
+    @ApiOperation(value = "获取医院信息（limit分页）")
+    @GetMapping("/pageListByLimit")
+    @ResponseBody
+    public R pageListByLimit(Hospital hospitalQO, PageQO pageQO) {
+        PageVO<Hospital> pageVO = hospitalService.pageList(hospitalQO, pageQO);
+        return R.ok().put("result", pageVO);
     }
 
     @ApiOperation(value = "获取特定医院信息", notes = "通过医院ID")
